@@ -17,6 +17,8 @@ The purpose of Riot is to build modular applications that are easy to manage and
 ## 4. Demo application
 Riot.js comes with an example application that goes beyond a Todo MVC. It's an administration panel that is easy to continue with. Something useful. It's well documented and shows the basics of modular programming.
 
+This documentation is split into two parts: 1) outlining the core concepts in modular single page applications and 2) code samples. After those you can peek the source code of the [demo application](https://github.com/moot/riotjs-admin) to get full understanding of modular Riot applications.
+
 
 # Modular applications
 
@@ -114,32 +116,36 @@ Your backend interface can just have a generic `call` method and the underlying 
 
 # View
 
-The view is what user sees and interacts with. The HTML page. Basically it's just a source of events:
+The view is what user sees and interacts with. The HTML page on a web browser. What's actually interesting for a JavaScript developer is the document object model (DOM). You can do all kinds of creative tricks to build user experiences. Most importantly it's a source of events:
 
-- ready event
-- user events
-- URL change events
+1) User events: click, scroll, keypress, mousemove etc..
+2) Document ready event
+3) URL change events
 
-events that the presenter is listening to. The view layer has no logic. Just plain old HTML and CSS code.
+These events are in special interest for Presenters, which perform the actual manipulation of the view. The view itself has no logic – just plain old HTML and CSS code.
 
 
 # Presenter
 
-- other frameworks call this layer a "view", but in MVP this is called the "presenter"
-- you can have multiple views and presenters on the same page
+Presenter is the important middleman between the View and Model. Each presenter is a loosely-coupled module performing a discrete function and can be developed individually.
+
+Presenter listens to the View events and calls the appropriate methods on the API. It also listens to the Model events and manipulates the DOM accordingly.
+
 - Think of making a new Twitter client
 - presenter "hook" to the view using CSS- like selectors (jQuery)
 - explicitly define links to emit an URL change event
 - presenter shouldn't be making assertions about the business model
-- localization, date formatting belong here
+- all decorative stuff such as localization and date formatting belong here
+- other frameworks call this layer a "view", but in MVP this is called the "presenter"
 
 
 ## Templating
 
 - HTML is not originally meant to describe logic, JavaScript is
 - <template/> tag, the contract between view and presenter
-- template loops (no need, done on presenter already)
-- if logic is crucial, Riot let's you use a different template engine
+- template loops are mostly unnecessary. you need to iterate lists upon initialization as well as add items to the DOM on runtime. hard to handle with template loops without data binding
+- if logic is absolutely crucial, feel free to use your favorite template engine (overrated, why?)
+- single presenter can work with multiple template tags
 
 
 ## jQuery
@@ -175,9 +181,10 @@ Now let's focus to actual coding. Here is the goal:
 - full, documented API is given on the argument
 - each team member can work on their own module, without breaking the core
 
+
 ## Application lifecycle
 
-1) Initialize application: spa({ page: location.hash.slice(2) }) // + other configuration
+1) Initialize application: your_app_name(config) // see module interface below
   This can be done on various stages:
   - document.ready
   - at the end of the page
@@ -218,19 +225,12 @@ $(function() {
 ## View switching
 
 - $(document).on("click.todo", 'a[href~="#"]', $.route);
-
-
-## Application reloads
-
-- login / logout
+- application reloads: login / logout
 
 
 
 
-
-
-
-# Extensions (on later doc)
+# Extensions (on later doc?)
 
 - standalone tools, something to use and not extend
 - usable everywhere, not just Riot (it's vanilla anyway)
@@ -244,7 +244,7 @@ $(function() {
 
 
 
-# Testing (on later doc)
+# Testing (on later doc?)
 
 The driving reason to use Passive View is to enhance testability
 

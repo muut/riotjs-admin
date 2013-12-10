@@ -1,35 +1,34 @@
 
-TODO
-- source documentation
-- Backend to make more sense
-- jslint
+### Riot.js demo
 
+This is a demo single-page application made with Riot.js. It's a generic skeleton for an administration panel that shows the core concepts of modular client side development.
 
-## Features
-- actually something useful (for you to fork)
+### Features
+- actually something useful, just fork it and extend it to your needs
+- plain and minimal UI
 - login / logout (reloading), always a challenge
-- session management
+- session management basics
 - small: ~7.5kb minified, including Riot (3kb gzipped)
-- one global variable only: admin
 - optional caching of data
-- uncluttered pages (UI wise), no nested views
 - no big customer listings, search does the job
 
 
-## Modular
-- modules included ui/*.js, api/*.js in no specific order
-- can be renamed/removed/modified on the fly and concat works.
+### Modular architecture
+- one global variable `admin` to build modules
+- modules can be included in no specific order(ui/*.js, api/*.js)
+- each can be renamed/removed/modified on without breaking the app
 - backend agnostic
-- maintainable / team
+- maintainable / good for multiple developers
 
 
-## Extendable
-- real API: admin().load("customers")
-- events to hook
-- promise interfaces on api calls
-- admin(function), white labeling: use app name to extend instead of a framework name
+### Extendable
+- Real API: try for example `admin().load("customers")` on console
+- Documented methods *and* events
+- Promise pattern for more fluent error handling
+- Use app name to extend instead of a framework name: `admin(callback)`
 
 
-## Future
-- realtime
-- more tests
+### Future
+- real backend (firebase, hosted server, to be decided...)
+- realtime channel
+- tests for both UI and API layer
