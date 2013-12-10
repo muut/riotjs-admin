@@ -1,0 +1,43 @@
+*{border:0;margin:0;line-height:1;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+body{font-family:"Myriad Pro","Lucida Grande","Lucida Sans Unicode"}
+template{display:none}
+a{color:#1fadc5;text-decoration:none;cursor:pointer;}
+a:hover{text-decoration:underline}
+input{border:1px solid #ccc;padding:.6em;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;font-size:100%}
+header{background-color:#333;padding:.6em;margin-bottom:1.2em;color:#eee;text-transform:uppercase;letter-spacing:2px;font-size:110%;display:none}
+header div,main{max-width:800px;margin:0 auto}
+header a{font-size:80%;margin-left:1em;color:#eee}
+navi{margin-left:2em;display:inline-block;width:58%}
+#search{display:inline-block;position:relative;}
+#search input{padding:.2em 1em;-webkit-border-radius:3em;-moz-border-radius:3em;border-radius:3em;font-size:90%;background-color:#ddd;-webkit-transition:background-color .4s;-moz-transition:background-color .4s;transition:background-color .4s;}
+#search input:focus{outline:none;background-color:#fff}
+#search.is-loading{opacity:.5;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50);-webkit-transition:opacity .2s;-moz-transition:opacity .2s;transition:opacity .2s}
+#results{position:absolute;top:110%;left:0;background-color:#fff;width:100%;box-shadow:0 0 6px #ccc;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;padding:.5em;display:none;}
+#results a{font-size:80%;color:#333;text-transform:none;letter-spacing:0;display:block;margin-bottom:.5em;text-decoration:none;}
+#results a:hover{background-color:#1fadc5;color:#fff}
+#results a > *{display:inline-block;vertical-align:middle}
+#results img{width:2.4em;margin-right:.3em}
+#results span{margin-top:.3em}
+#login{padding:2em;background-color:rgba(0,0,0,0.3);color:#eee;margin:15% auto;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;display:none;}
+#login label{display:block;margin-bottom:1.2em;font-weight:100;color:#777;text-align:left}
+#login input{width:100%;border:none;background-color:rgba(255,255,255,0.5);box-shadow:0 0 5px #444 inset;}
+#login input:focus{background-color:#fff}
+#login button{width:60%;padding:.6em 0;background-color:#1fadc5;color:#fff;font-size:110%;cursor:pointer;-webkit-border-radius:5em;-moz-border-radius:5em;border-radius:5em}
+#login h3{font-family:"avenir next","helvetica neue";font-weight:100;font-size:250%;margin-bottom:.6em}
+canvas{width:800px;height:200px}
+main > div{display:none}
+.is-not-logged{background:url("../img/login.jpg");-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;text-align:center;}
+.is-not-logged #login{display:inline-block}
+.is-logged{background-image:none;}
+.is-logged#customers-page #customers,.is-logged#stats-page #stats,.is-logged#user-page #user,.is-logged header{display:block}
+.is-logged #login{display:none}
+#bars div{padding:.3em 0;}
+#bars div > *{display:inline-block;vertical-align:top}
+#bars a{width:18%;white-space:no-wrap;padding-right:.6em}
+#bars .bar{width:80%}
+#bars span{height:7px;background-color:#ccc;display:block;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px}
+#user{margin-top:1.2em;}
+#user img{margin-right:1.2em;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px}
+#user div{display:inline-block;max-width:530px;vertical-align:top}
+#user h1{margin-bottom:.3em;color:#1fadc5;font-weight:normal}
+#user .desc{color:#777;font-size:120%;line-height:1.2}

@@ -1,0 +1,99 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin Demo | Riot.js – The 1kb MVP framework</title>
+    <link rel="stylesheet" href="style/style.css">
+  </head>
+
+  <template id="bars-tmpl">
+    <div>
+      <a href="#/account/{id}">{name}</a>
+      <div class="bar"><span style="width: {width}%"></span></div>
+    </div>
+  </template>
+
+  <template id="result-tmpl">
+    <a href="#/user/{id}">
+      <img src="{img}"> <span>{name}</span>
+    </a>
+  </template>
+
+  <template id="user-tmpl">
+    <img src="{img}">
+    <div>
+      <h1>{name}</h1>
+      <p class="desc">{desc}</p>
+    </div>
+  </template>
+
+  <body id="app">
+
+    <header>
+      <div>
+        <form id="search">
+          <input name="q" placeholder="Search...">
+          <div id="results"></div>
+        </form>
+
+        <navi>
+          <a href="#/stats">Statistics</a>
+          <a href="#/customers">Customers</a>
+        </navi>
+
+        <a id="logout">Logout</a>
+
+      </div>
+    </header>
+
+    <main>
+
+      <!-- login -->
+      <form id="login">
+        <h3>Administration</h3>
+        <label>
+          <span>Username</span>
+          <input name="username" value="riot" autofocus>
+        </label>
+        <label>
+          <span>Password</span>
+          <input name="password" type="password" value="riot">
+        </label>
+        <p><button>Log in</button></p>
+      </form>
+
+      <!-- home -->
+      <div id="stats">
+        <h3>Customers</h3>
+        <canvas width="800" height="200"></canvas>
+
+        <h3>Users</h3>
+        <canvas width="800" height="200"></canvas>
+
+        <h3>Posts</h3>
+        <canvas width="800" height="200"></canvas>
+      </div>
+
+      <!-- customers -->
+      <div id="customers">
+        <div id="bars"></div>
+      </div>
+
+      <!-- user -->
+      <div id="user"></div>
+
+    </main>
+
+    <footer>
+
+    </footer>
+
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="dist/admin.js"></script>
+    <script>admin({ page: location.hash.slice(2), root: $("body") })</script>
+
+  </body>
+
+</html>

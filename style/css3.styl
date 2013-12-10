@@ -1,0 +1,32 @@
+
+vendor-prefixes = webkit moz w3c
+
+vendor(prop, args, only = null, ignore = null)
+  for prefix in vendor-prefixes
+    unless (only and !(prefix in only)) or (ignore and prefix in ignore)
+      if prefix == w3c
+        {prop}: args
+      else
+        {'-' + prefix + '-' + prop}: args
+
+opacity(args...)
+  opacity: args
+  filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=%s)' % round(args[0] * 100)
+
+background-size()
+  vendor('background-size', arguments)
+
+transform()
+  vendor('transform', arguments)
+
+border-image()
+  vendor('border-image', arguments)
+
+transition()
+  vendor('transition', arguments)
+
+box-sizing()
+  vendor('box-sizing', arguments)
+
+border-radius()
+  vendor('border-radius', arguments)

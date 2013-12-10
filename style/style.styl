@@ -1,0 +1,234 @@
+
+@import "css3"
+
+mootred           = #ff003f
+red               = #be0000
+green             = #4cbe00
+blue              = #1fadc5
+blue2             = #6cb7c4
+pink              = #ff57a8
+
+
+// size units
+u = 0.6em
+u2 = 1.2em
+uh = 0.3em
+
+// quick reset
+*
+  border 0
+  margin 0
+  line-height 1
+  box-sizing border-box
+
+
+body
+  font-family "Myriad Pro", "Lucida Grande", "Lucida Sans Unicode"
+
+template
+  display none
+
+a
+  color blue
+  text-decoration none
+  cursor pointer
+
+  &:hover
+    text-decoration underline
+
+input
+  border 1px solid #c
+  padding u
+  border-radius 3px
+  font-size 100%
+
+header
+  background-color #3
+  padding u
+  margin-bottom u2
+  color #e
+  text-transform uppercase
+  letter-spacing 2px
+  font-size 110%
+  display none
+
+header div, main
+  max-width 800px
+  margin 0 auto
+
+header a
+  font-size 80%
+  margin-left 1em
+  color #e
+
+navi
+  margin-left 2em
+  display inline-block
+  width 58%
+
+
+// search
+#search
+  display inline-block
+  position relative
+
+  input
+    padding .2em 1em
+    border-radius 3em
+    font-size 90%
+    background-color #d
+    transition background-color .4s
+
+    &:focus
+      outline none
+      background-color #f
+
+  &.is-loading
+    opacity .5
+    transition opacity .2s
+
+#results
+  position absolute
+  top 110%
+  left 0
+  background-color #f
+  width 100%
+  box-shadow 0 0 6px #c
+  border-radius 4px
+  padding .5em
+  display none
+
+  a
+    font-size 80%
+    color #3
+    text-transform none
+    letter-spacing 0
+    display block
+    margin-bottom .5em
+    text-decoration none
+
+    &:hover
+      background-color blue
+      color #f
+
+    > *
+      display inline-block
+      vertical-align middle
+  img
+    width 2.4em
+    margin-right uh
+
+  span
+    margin-top uh
+
+
+
+#login
+  padding 2em
+  background-color rgba(#0, .3)
+  color #e
+  margin 15% auto
+  border-radius 4px
+  display none
+
+  label
+    display block
+    margin-bottom u2
+    font-weight 100
+    color #7
+    text-align left
+
+  input
+    width 100%
+    border none
+    background-color rgba(#f, .5)
+    box-shadow 0 0 5px #4 inset
+
+    &:focus
+      background-color #f
+
+  button
+    width 60%
+    padding u 0
+    background-color blue
+    color #f
+    font-size 110%
+    cursor pointer
+    border-radius 5em
+
+  h3
+    font-family "avenir next", "helvetica neue"
+    font-weight 100
+    font-size 250%
+    margin-bottom u
+
+// view visibility
+canvas
+  width 800px
+  height 200px
+
+main > div
+  display none
+
+.is-not-logged
+  background url(../img/login.jpg)
+  background-size cover
+  text-align center
+
+  #login
+    display inline-block
+
+.is-logged
+  background-image none
+
+  &#customers-page #customers, &#stats-page #stats, &#user-page #user, header
+    display block
+
+  #login
+    display none
+
+
+// bars
+#bars
+  div
+    padding uh 0
+    > *
+      display inline-block
+      vertical-align top
+
+  a
+    width 18%
+    white-space no-wrap
+    padding-right u
+
+  .bar
+    width 80%
+
+  span
+    height 7px
+    background-color #c
+    display block
+    border-radius 2px
+
+
+#user
+  margin-top u2
+
+  img
+    margin-right u2
+    border-radius 4px
+
+  div
+    display inline-block
+    max-width 530px
+    vertical-align top
+
+  h1
+    margin-bottom uh
+    color blue
+    font-weight normal
+
+  .desc
+    color #7
+    font-size 120%
+    line-height 1.2

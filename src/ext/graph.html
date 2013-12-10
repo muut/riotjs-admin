@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+
+<!-- test page for graphs -->
+<html>
+  <head>
+    <title>Graph</title>
+    <style>body { font-family: 'myriad pro'; margin: 100px; } h3 { padding-left: 33px; color: #333; font-size: 100%; }</style>
+    <script src="../bower_components/jquery/jquery.min.js"></script>
+    <script src="ui/graph.js"></script>
+    <script>
+      function data(mult) {
+        var arr = [];
+
+        for (var i = 0; i < 30; i++) {
+          arr[i] = Math.random() * mult * i;
+        }
+
+        return arr;
+      }
+
+      $(function() {
+        console.info(data(10));
+        $("#graph").graph2(data(100), '#1fadc5')
+        $("#graph2").graph2(data(50), '#4cbe00')
+      })
+    </script>
+  </head>
+
+  <body>
+    <h3>Forums</h3>
+    <canvas id="graph2" width="800" height="200"></canvas>
+
+    <h3>Users</h3>
+    <canvas id="graph" width="800" height="200"></canvas>
+
+  </body>
+
+</html>

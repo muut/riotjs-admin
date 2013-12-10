@@ -1,0 +1,573 @@
+
+
+(function(is_node) { "use strict";
+  /*global exports, window, setTimeout, history, location, document */
+
+  var top = is_node ? exports : window,
+    $ = is_node ? top : top.$ = top.$ || {};
+
+  // avoid multiple execution. popstate should be fired only once etc.
+  if ($.riot) return;
+
+  $.riot = "0.9.5";
+
+  $.observable = function(el) {
+
+    var callbacks = {},
+      slice = [].slice;
+
+    el.on = function(events, fn) {
+
+      if (typeof fn == "function") {
+        events = events.split(/\s+/);
+
+        for (var i = 0, len = events.length, type; i < len; i++) {
+          type = events[i];
+          (callbacks[type] = callbacks[type] || []).push(fn);
+          if (len > 1) fn.typed = true;
+        }
+      }
+      return el;
+    };
+
+    el.off = function(events) {
+      events = events.split(/\s+/);
+
+      for (var i = 0; i < events.length; i++) {
+        callbacks[events[i]] = [];
+      }
+
+      return el;
+    };
+
+    // only single event supported
+    el.one = function(type, fn) {
+      if (fn) fn.one = true;
+      return el.on(type, fn);
+
+    };
+
+    el.trigger = function(type) {
+
+      var args = slice.call(arguments, 1),
+        fns = callbacks[type] || [];
+
+      for (var i = 0, fn; i < fns.length; ++i) {
+        fn = fns[i];
+
+        if (fn.one && fn.done) continue;
+
+        // add event argument when multiple listeners
+        fn.apply(el, fn.typed ? [type].concat(args) : args);
+
+        fn.done = true;
+      }
+
+      return el;
+    };
+
+    return el;
+
+  };
+
+  if (is_node) return;
+
+  // cross browser popstate
+  var currentHash,
+    fn = $.observable({}),
+    listen = top.addEventListener,
+    doc = document;
+
+  function pop(hash) {
+    hash = hash.type ? location.hash : hash;
+    if (hash != currentHash) fn.trigger("pop", hash);
+    currentHash = hash;
+  }
+
+  if (listen) {
+    listen("popstate", pop, false);
+    doc.addEventListener("DOMContentLoaded", pop, false);
+
+  } else {
+    doc.attachEvent("onreadystatechange", function() {
+      if (doc.readyState == "complete") pop("");
+    });
+
+  }
+
+  // Change the browser URL or listen to changes on the URL
+  $.route = function(to) {
+
+    // listen
+    if (typeof to == "function") return fn.on("pop", to);
+
+    // fire
+    if (history.pushState) history.pushState(0, 0, to);
+    pop(to);
+
+  };
+
+})(typeof exports == "object");
+
+/*
+  Riot.js templating | moot.it/riotjs | license: MIT
+  (c) 2013 Tero Piirainen, Moot Inc and other contributors.
+ */
+(function() {
+
+  // Precompiled templates (JavaScript functions)
+  var FN = {};
+
+  // Render a template with data
+  $.render = function(template, data) {
+    return !template ? '' : (FN[template] = FN[template] || new Function("_",
+      "return '" + template
+        .replace(/\n/g, "\\n")
+        .replace(/\r/g, "\\r")
+        .replace(/'/g, "\\'")
+        .replace(/\{\s*(\w+)\s*\}/g, "' + (_.$1 === undefined || _.$1 === null ? '' : _.$1) + '") +
+      "'"
+    ))(data);
+  }
+
+})();(function(is_node) {
+function Admin(conf) {
+
+  var self = $.observable(this),
+      backend = new Backend({ cache: true });
+
+  $.extend(self, conf);
+
+  self.load = function(page, fn) {
+    self.one("load", fn);
+
+    backend.call("load", page, function(view) {
+      self.trigger("load", view)
+    })
+  };
+
+
+  self.search = function(query, fn) {
+    return backend.call("search", query, fn);
+  };
+
+
+  self.on("load", function(view) {
+    self.trigger("load:" + view.type, view.data, view.path);
+    self.page = view.type;
+  });
+
+
+  backend.call("init", conf.page).always(function(data) {
+    self.user = new User(self, data ? data.user : {}, backend);
+    self.trigger("ready");
+
+  }).done(function(data) {
+    self.trigger("load", data.view)
+
+  }).fail(function() {
+    self.user.one("login", function(data) {
+      $.extend(self.user, data.user);
+      self.trigger("load", data.view);
+
+    });
+
+  })
+
+}
+
+var top = is_node ? exports : window,
+  instance;
+
+
+// observable magic
+top.admin = $.observable(function(arg) {
+
+  if (!arg) return instance;
+
+  if ($.isFunction(arg)) {
+    admin.on("ready", arg);
+
+  } else {
+
+    instance = new Admin(arg);
+
+    instance.on("ready", function() {
+      admin.trigger.call(instance, "ready", instance);
+    });
+
+  }
+
+});
+
+
+
+// session management goes here
+function Backend(conf) {
+
+  var self = this,
+    cache = {};
+
+  self.call = function(method, arg, fn) {
+
+    console.info("->", method, arg);
+
+    var logged_in = method == 'init' && localStorage.sessionId,
+        ret = test_data[method](arg, logged_in),
+        promise = new Promise(fn);
+
+    promise.done(fn);
+
+    // optional caching
+    if (conf.cache && method == 'load') {
+      if (cache[arg]) return promise.done(cache[arg])
+      cache[arg] = ret;
+    }
+
+    // session management
+    if (ret.sessionId) localStorage.sessionId = ret.sessionId;
+    if (method == 'logout') localStorage.removeItem("sessionId")
+
+    setTimeout(function() {
+      promise.always(ret);
+      promise[ret === false ? 'fail' : 'done'](ret);
+
+      console.info("<-", ret);
+
+    }, 100)
+
+    return promise;
+
+  }
+
+}
+
+
+// another good use case for observables
+function Promise(fn) {
+  var self = $.observable(this);
+
+  $.each(['done', 'fail', 'always'], function(i, name) {
+    self[name] = function(arg) {
+      return self[$.isFunction(arg) ? 'on' : 'trigger'](name, arg);
+    };
+
+  });
+
+}
+
+
+// "fixtures"
+
+function graph(mult) {
+  var arr = [];
+
+  for (var i = 0; i < 30; i++) {
+    arr[i] = Math.random() * mult * i;
+  }
+
+  return arr;
+}
+
+function customers() {
+  return [
+    { id: 34, img: 'img/tipiirai.jpg', name: 'Machinery', val: 398 },
+    { id: 60, img: 'img/tipiirai.jpg', name: 'Big Robots', val: 318 },
+    { id: 89, img: 'img/tipiirai.jpg', name: 'Monsterous', val: 267 }
+  ];
+}
+
+function user(id) {
+  return {
+    id: 809,
+    img: 'img/tipiirai.jpg',
+    name: 'Tero Piirainen',
+    desc: 'Elit hoodie pickled, literally church-key whatever High Life skateboard tofu actually reprehenderit. Id slow-carb asymmetrical accusamus Portland, flannel tempor proident odio esse quis.'
+  }
+}
+
+var test_data = {
+
+  // load new "page"
+  load: function(path) {
+
+    var els = path.split("/"),
+      page = els[0];
+
+    return {
+      path: path,
+      type: page || "stats",
+      data: page == "stats" ? [ graph(100), graph(100), graph(200) ] :
+            page == "customers" ? customers() :
+            page == "user" ? user(els[1]) : []
+    }
+
+  },
+
+  // init
+  init: function(page, logged_in) {
+
+    return !logged_in ? false : {
+      user: {
+        email: "joe@riotjs.com",
+        name: "Joe Rebellous",
+        username: "riot"
+      },
+      sessionId: 'riot-test-id',
+      view: test_data.load(page)
+    }
+
+  },
+
+  search: function(query) {
+    return customers();
+  },
+
+  login: function(params) {
+    return test_data.init(params.page, params.username == 'riot')
+  },
+
+  logout: function() {
+    return true;
+  }
+
+}
+
+
+function User(app, data, backend) {
+
+  var self = $.observable(this);
+
+  $.extend(self, data);
+
+  self.login = function(params, fn) {
+    self.one("login", fn);
+
+    return backend.call("login", params, function(data) {
+      self.trigger("login", data);
+    });
+
+  };
+
+  self.logout = function(fn) {
+    self.one("logout", fn);
+
+    backend.call("logout", {}, function(data) {
+      self.trigger("logout");
+    });
+
+  };
+
+}})(typeof exports == "object")
+// very minimalistic and non-tested
+$.fn.graph2 = function(data, color) {
+
+  var graph = this;
+      padd = 35,
+      c = graph[0].getContext("2d"),
+      max = Math.max.apply(0, data),
+      width = graph.width(),
+      height = graph.height(),
+      len = data.length;
+
+  // re-render? -> clear
+  c.clearRect (0, 0, width, height);
+
+  function getX(val) {
+    return ((width - padd) / len) * val + (padd * 1.5);
+  }
+
+  function getY(val) {
+    return height - (((height - padd) / max) * val) - padd;
+  }
+
+  c.strokeStyle = "#999";
+  c.font = "12px " + $("body").css("fontFamily");
+  c.fillStyle = "#666"
+  c.textAlign = "center";
+
+  // axises
+  c.lineWidth = .5;
+  c.beginPath();
+  c.moveTo(padd, 0);
+  c.lineTo(padd, height - padd);
+  c.lineTo(width, height - padd);
+  c.stroke();
+
+  // x labels
+  for(var i = 0; i < len; i++) {
+    c.fillText(i, getX(i), height - padd + 20);
+  }
+
+  // y labels
+  c.textAlign = "right"
+  c.textBaseline = "middle";
+
+  var steps = Math.round(max / 6 / 100) * 100;
+
+  for(var i = 0; i < max; i += steps) {
+    c.fillText(i, padd - 10, getY(i));
+  }
+
+  // lines
+  c.lineWidth = 1;
+  c.beginPath();
+  c.moveTo(getX(0), getY(data[0]));
+
+  for(var i = 1; i < len; i ++) {
+    c.lineTo(getX(i), getY(data[i]));
+  }
+
+  c.strokeStyle = color;
+  c.stroke();
+
+};
+
+
+
+admin(function(app) {
+
+  var root = $("#bars", app.root),
+    tmpl = $("#bars-tmpl").html();
+
+  app.on("load:customers", function(view) {
+
+    var max;
+
+    // clear existing data
+    root.empty();
+
+    $.each(view, function(i, entry) {
+      var val = entry.val;
+      if (!i) max = val;
+      entry.width = Math.round(val / max * 100);
+
+      root.append($.render(tmpl, entry))
+    })
+
+  })
+
+})
+
+// login and logout
+
+admin(function(app) {
+
+  var user = app.user;
+
+  // login
+  var $login = $("#login").submit(function(e) {
+    e.preventDefault();
+
+    user.login({
+      username: this.username.value,
+      password: this.password.value,
+      page: app.page
+
+    }).fail(function() {
+      console.info("login failed");
+    })
+
+  })
+
+  // logout
+  $("#logout").click(function(e) {
+    e.preventDefault();
+    user.logout()
+  })
+
+  function login(is_logged) {
+    app.root.toggleClass("is-logged", is_logged).toggleClass("is-not-logged", !is_logged)
+  }
+
+  user.on("login logout", function(type) {
+    login(type == 'login')
+
+  })
+
+  login(!!user.username)
+
+})
+
+admin(function(app) {
+
+  // routing
+  $(document).on("click", "a[href^='#/']", function() {
+    $.route($(this).attr("href"))
+  })
+
+  $.route(function(path) {
+    var page = path.slice(2);
+    app.root.attr("id", page + "-page");
+    app.load(page)
+  })
+
+  // body id
+  app.on("load", function(view) {
+    app.root.attr("id", view.type + "-page");
+  })
+
+});
+
+
+
+admin(function(app) {
+
+  var form = $("#search"),
+      tmpl = $("#result-tmpl").html(),
+      results = $("#results");
+
+  form.submit(function(e) {
+
+    e.preventDefault();
+
+    var form = $(this),
+        val = $.trim(this.q.value);
+
+    if (!val) return;
+
+    form.addClass("is-loading");
+
+    app.search(val, function(arr) {
+      form.removeClass("is-loading");
+      results.empty().show();
+
+      $.each(arr, function(i, res) {
+        results.append($.render(tmpl, res))
+      })
+    })
+
+    $(document).one("click keypress", function() {
+      results.hide();
+    })
+
+  })
+
+})
+
+admin(function(app) {
+
+  var canvas = $("canvas", app.root),
+    colors = ['#be0000', '#4cbe00', '#1fadc5'];
+
+  app.on("load:stats", function(stats) {
+
+    $.each(stats, function(i, data) {
+      canvas.eq(i).graph2(data, colors[i])
+    });
+
+  })
+
+})
+
+admin(function(app) {
+
+  var root = $("#user"),
+    tmpl = $("#user-tmpl").html()
+
+  app.on("load:user", function(data) {
+    console.info(data);
+    root.html($.render(tmpl, data))
+  })
+
+});

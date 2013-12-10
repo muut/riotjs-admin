@@ -1,0 +1,20 @@
+{
+  "name": "riot-admin",
+  "description": "Riot.js based administration panel",
+  "version": "1.0.0",
+  "homepage": "https://moot.it/riotjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moot/riotjs.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://moot.it/riotjs/license"
+    }
+  ],
+  "devDependencies": {
+    "shelljs": "0.2.x",
+    "gaze": "0.4.x"
+  }
+}
