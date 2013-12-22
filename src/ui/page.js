@@ -1,21 +1,30 @@
 
-// Page switching
+// View switching (= routing)
+
 admin(function(app) {
 
-  // routing
+  // 1. select elements from the page that trigger view switchig
   $(document).on("click", "a[href^='#/']", function() {
-    $.route($(this).attr("href"))
+
+    // Call $.route method with arbitary arguments
+    // Riot takes care of the URL change behind the scenes
+    $.route($(this).attr("href"));
+
   })
 
+
+  // 2. unlimited $.route callbacks allowed
   $.route(function(path) {
-    var page = path.slice(2);
-    app.root.attr("id", page + "-page");
-    app.load(page)
+    $(".page.is-active").removeClass("is-active");
+    // app.root.attr("id", page + "-page").addClass("is-loading");
+    app.load(path.slice(2))
   })
 
   // assign body id
   app.on("load", function(view) {
-    app.root.attr("id", view.type + "-page");
+    console.info(view.type);
+    $("#" + view.type).addClass("is-active")
+    // app.root.attr("id", view.type + "-page").removeClass("is-loading");
   })
 
 });

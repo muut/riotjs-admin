@@ -51,7 +51,7 @@ To actually keep things modular is constant organization work. Things should be 
 
 # Model, View and Presenter
 
-Riot.js helps you to build single page applications that are easy to maintain.
+How to build modular single-page applications?
 
 Let's clean the table.
 
@@ -146,6 +146,25 @@ Presenter listens to the View events and calls the appropriate methods on the AP
 - template loops are mostly unnecessary. you need to iterate lists upon initialization as well as add items to the DOM on runtime. hard to handle with template loops without data binding
 - if logic is absolutely crucial, feel free to use your favorite template engine (overrated, why?)
 - single presenter can work with multiple template tags
+
+## Routing
+
+Routing or view switching is a core feature in single-page application. It's one of the main things that defines a framework. Riot performs routing as follows:
+
+1) You select links from the page that perform view switching. They call the ´$.route()` method with arbitary parameters
+
+2) Riot changes the URL based on the argument and notifies all listeners that are observing the route event
+
+3) The listeners inside the modules react accordingly
+
+Routing is basically just a special event that modules listen to.
+
+Typically one of the listeners will load data from the server that correspond to the route. The demo application calls
+
+Before and after events (cancel view switch)
+How do you inject page object for the view?
+
+
 
 
 ## jQuery

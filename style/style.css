@@ -25,11 +25,13 @@ navi{margin-left:2em;display:inline-block;width:58%}
 #login button{width:60%;padding:.6em 0;background-color:#1fadc5;color:#fff;font-size:110%;cursor:pointer;-webkit-border-radius:5em;-moz-border-radius:5em;border-radius:5em}
 #login h3{font-family:"avenir next","helvetica neue";font-weight:100;font-size:250%;margin-bottom:.6em}
 canvas{width:800px;height:200px}
-main > div{display:none}
+main{position:relative}
+.page{position:absolute;top:0;left:0;opacity:0;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);-webkit-transition:opacity .2s;-moz-transition:opacity .2s;transition:opacity .2s;display:none;width:100%;}
+.page.is-active{opacity:1;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100)}
 .is-not-logged{background:url("../img/login.jpg");-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;text-align:center;}
 .is-not-logged #login{display:inline-block}
 .is-logged{background-image:none;}
-.is-logged#customers-page #customers,.is-logged#stats-page #stats,.is-logged#user-page #user,.is-logged header{display:block}
+.is-logged header,.is-logged .page{display:block}
 .is-logged #login{display:none}
 #bars div{padding:.3em 0;}
 #bars div > *{display:inline-block;vertical-align:top}

@@ -25,6 +25,8 @@ uh = 0.3em
 body
   font-family "Myriad Pro", "Lucida Grande", "Lucida Sans Unicode"
 
+
+
 template
   display none
 
@@ -167,8 +169,20 @@ canvas
   width 800px
   height 200px
 
-main > div
+main
+  position relative
+
+.page
+  position absolute
+  top 0
+  left 0
+  opacity 0
+  transition opacity .2s
   display none
+  width 100%
+
+  &.is-active
+    opacity 1
 
 .is-not-logged
   background url(../img/login.jpg)
@@ -181,7 +195,7 @@ main > div
 .is-logged
   background-image none
 
-  &#customers-page #customers, &#stats-page #stats, &#user-page #user, header
+  header, .page
     display block
 
   #login

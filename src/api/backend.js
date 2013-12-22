@@ -31,7 +31,7 @@ function Backend(conf) {
 
       console.info("<-", ret);
 
-    }, 100)
+    }, 400)
 
     return promise;
 

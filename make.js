@@ -10,7 +10,7 @@ var gaze = require('gaze'),
 function concat() {
 
   // Riot
-  var js = cat("../riot.js", "../ext/render.js")
+  var js = cat("../riotjs/riot.js")
 
   // api
   js += ";(function(is_node) {" + cat("src/api/*.js") + '})(typeof exports == "object")'

@@ -1,136 +1,122 @@
+/*
+	Riot.js 0.9.7 | moot.it/riotjs | @license MIT
+	(c) 2013 Tero Piirainen, Moot Inc and other contributors.
+*/
+(function($) { "use strict";
 
+$.observable = function(el) {
+  var callbacks = {}, slice = [].slice;
 
-(function(is_node) { "use strict";
-  /*global exports, window, setTimeout, history, location, document */
+  el.on = function(events, fn) {
 
-  var top = is_node ? exports : window,
-    $ = is_node ? top : top.$ = top.$ || {};
-
-  // avoid multiple execution. popstate should be fired only once etc.
-  if ($.riot) return;
-
-  $.riot = "0.9.5";
-
-  $.observable = function(el) {
-
-    var callbacks = {},
-      slice = [].slice;
-
-    el.on = function(events, fn) {
-
-      if (typeof fn == "function") {
-        events = events.split(/\s+/);
-
-        for (var i = 0, len = events.length, type; i < len; i++) {
-          type = events[i];
-          (callbacks[type] = callbacks[type] || []).push(fn);
-          if (len > 1) fn.typed = true;
-        }
-      }
-      return el;
-    };
-
-    el.off = function(events) {
+    if (typeof fn === "function") {
       events = events.split(/\s+/);
 
-      for (var i = 0; i < events.length; i++) {
-        callbacks[events[i]] = [];
+      for (var i = 0, len = events.length, type; i < len; i++) {
+        type = events[i];
+        (callbacks[type] = callbacks[type] || []).push(fn);
+        if (len > 1) fn.typed = true;
       }
+    }
+    return el;
+  };
 
-      return el;
-    };
+  el.off = function(events) {
+    events = events.split(/\s+/);
 
-    // only single event supported
-    el.one = function(type, fn) {
-      if (fn) fn.one = true;
-      return el.on(type, fn);
-
-    };
-
-    el.trigger = function(type) {
-
-      var args = slice.call(arguments, 1),
-        fns = callbacks[type] || [];
-
-      for (var i = 0, fn; i < fns.length; ++i) {
-        fn = fns[i];
-
-        if (fn.one && fn.done) continue;
-
-        // add event argument when multiple listeners
-        fn.apply(el, fn.typed ? [type].concat(args) : args);
-
-        fn.done = true;
-      }
-
-      return el;
-    };
+    for (var i = 0; i < events.length; i++) {
+      callbacks[events[i]] = [];
+    }
 
     return el;
+  };
+
+  // only single event supported
+  el.one = function(type, fn) {
+    if (fn) fn.one = true;
+    return el.on(type, fn);
 
   };
 
-  if (is_node) return;
+  el.trigger = function(type) {
 
-  // cross browser popstate
-  var currentHash,
-    fn = $.observable({}),
-    listen = top.addEventListener,
-    doc = document;
+    var args = slice.call(arguments, 1),
+      fns = callbacks[type] || [];
 
-  function pop(hash) {
-    hash = hash.type ? location.hash : hash;
-    if (hash != currentHash) fn.trigger("pop", hash);
-    currentHash = hash;
-  }
+    for (var i = 0, fn; i < fns.length; ++i) {
+      fn = fns[i];
 
-  if (listen) {
-    listen("popstate", pop, false);
-    doc.addEventListener("DOMContentLoaded", pop, false);
+      if (fn.one && fn.done) continue;
 
-  } else {
-    doc.attachEvent("onreadystatechange", function() {
-      if (doc.readyState == "complete") pop("");
-    });
+      // add event argument when multiple listeners
+      fn.apply(el, fn.typed ? [type].concat(args) : args);
 
-  }
+      fn.done = true;
+    }
 
-  // Change the browser URL or listen to changes on the URL
-  $.route = function(to) {
-
-    // listen
-    if (typeof to == "function") return fn.on("pop", to);
-
-    // fire
-    if (history.pushState) history.pushState(0, 0, to);
-    pop(to);
-
+    return el;
   };
 
-})(typeof exports == "object");
+  return el;
 
-/*
-  Riot.js templating | moot.it/riotjs | license: MIT
-  (c) 2013 Tero Piirainen, Moot Inc and other contributors.
- */
-(function() {
+};
 
-  // Precompiled templates (JavaScript functions)
-  var FN = {};
+// Precompiled templates (JavaScript functions)
+var FN = {};
 
-  // Render a template with data
-  $.render = function(template, data) {
-    return !template ? '' : (FN[template] = FN[template] || new Function("_",
-      "return '" + template
-        .replace(/\n/g, "\\n")
-        .replace(/\r/g, "\\r")
-        .replace(/'/g, "\\'")
-        .replace(/\{\s*(\w+)\s*\}/g, "' + (_.$1 === undefined || _.$1 === null ? '' : _.$1) + '") +
-      "'"
-    ))(data);
-  }
+// Render a template with data
+$.render = function(template, data) {
+  if(!template) return '';
 
-})();(function(is_node) {
+  FN[template] = FN[template] || new Function("_",
+    "return '" + template
+      .replace(/\n/g, "\\n")
+      .replace(/\r/g, "\\r")
+      .replace(/'/g, "\\'")
+      .replace(/\{\s*(\w+)\s*\}/g, "'+(_.$1?(_.$1+'').replace(/&/g,'&amp;').replace(/\"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):(_.$1===0?0:''))+'") + "'"
+  );
+
+  return FN[template](data);
+};
+
+
+// browsers only
+if (typeof top != "object") return;
+
+// cross browser popstate
+var currentHash,
+  pops = $.observable({}),
+  listen = window.addEventListener,
+  doc = document;
+
+function pop(hash) {
+  hash = hash.type ? location.hash : hash;
+  if (hash != currentHash) pops.trigger("pop", hash);
+  currentHash = hash;
+}
+
+if (listen) {
+  listen("popstate", pop, false);
+  doc.addEventListener("DOMContentLoaded", pop, false);
+
+} else {
+  doc.attachEvent("onreadystatechange", function() {
+    if (doc.readyState === "complete") pop("");
+  });
+}
+
+// Change the browser URL or listen to changes on the URL
+$.route = function(to) {
+  // listen
+  if (typeof to === "function") return pops.on("pop", to);
+
+  // fire
+  if (history.pushState) history.pushState(0, 0, to);
+  pop(to);
+
+};})(typeof top == "object" ? window.$ || (window.$ = {}) : exports);
+;(function(is_node) {
+// The API
 function Admin(conf) {
 
   var self = $.observable(this),
@@ -166,6 +152,8 @@ function Admin(conf) {
     self.trigger("load", data.view)
 
   }).fail(function() {
+
+    // failed because
     self.user.one("login", function(data) {
       $.extend(self.user, data.user);
       self.trigger("load", data.view);
@@ -180,14 +168,16 @@ var top = is_node ? exports : window,
   instance;
 
 
-// observable magic
+// The extension mechanism. Ability to split the application into loosely-coupled modules
 top.admin = $.observable(function(arg) {
 
   if (!arg) return instance;
 
+  // admin(conf) --> initialize application
   if ($.isFunction(arg)) {
     admin.on("ready", arg);
 
+  // admin(fn) --> add a module
   } else {
 
     instance = new Admin(arg);
@@ -202,7 +192,7 @@ top.admin = $.observable(function(arg) {
 
 
 
-// session management goes here
+// session management goes here, needs some cleanup to make it easier to read / understand
 function Backend(conf) {
 
   var self = this,
@@ -234,7 +224,7 @@ function Backend(conf) {
 
       console.info("<-", ret);
 
-    }, 100)
+    }, 400)
 
     return promise;
 
@@ -243,7 +233,7 @@ function Backend(conf) {
 }
 
 
-// another good use case for observables
+// Another good use case for observables
 function Promise(fn) {
   var self = $.observable(this);
 
@@ -257,7 +247,7 @@ function Promise(fn) {
 }
 
 
-// "fixtures"
+// Test data ("fixtures")
 
 function graph(mult) {
   var arr = [];
@@ -334,6 +324,7 @@ var test_data = {
 }
 
 
+// Current user (logged in or anonymous)
 function User(app, data, backend) {
 
   var self = $.observable(this);
@@ -359,7 +350,7 @@ function User(app, data, backend) {
   };
 
 }})(typeof exports == "object")
-// very minimalistic and non-tested
+// A minimalistic line graph tool, not tested
 $.fn.graph2 = function(data, color) {
 
   var graph = this;
@@ -425,6 +416,7 @@ $.fn.graph2 = function(data, color) {
 
 
 
+// List of customers
 admin(function(app) {
 
   var root = $("#bars", app.root),
@@ -456,7 +448,7 @@ admin(function(app) {
   var user = app.user;
 
   // login
-  var $login = $("#login").submit(function(e) {
+  $("#login").submit(function(e) {
     e.preventDefault();
 
     user.login({
@@ -473,44 +465,54 @@ admin(function(app) {
   // logout
   $("#logout").click(function(e) {
     e.preventDefault();
-    user.logout()
+    user.logout();
   })
 
-  function login(is_logged) {
+  function toggle(is_logged) {
     app.root.toggleClass("is-logged", is_logged).toggleClass("is-not-logged", !is_logged)
   }
 
   user.on("login logout", function(type) {
-    login(type == 'login')
-
+    toggle(type == 'login');
   })
 
-  login(!!user.username)
+  toggle(!!user.username);
 
 })
 
+// View switching (= routing)
+
 admin(function(app) {
 
-  // routing
+  // 1. select elements from the page that trigger view switchig
   $(document).on("click", "a[href^='#/']", function() {
-    $.route($(this).attr("href"))
+
+    // Call $.route method with arbitary arguments
+    // Riot takes care of the URL change behind the scenes
+    $.route($(this).attr("href"));
+
   })
 
+
+  // 2. unlimited $.route callbacks allowed
   $.route(function(path) {
-    var page = path.slice(2);
-    app.root.attr("id", page + "-page");
-    app.load(page)
+    $(".page.is-active").removeClass("is-active");
+    // app.root.attr("id", page + "-page").addClass("is-loading");
+    app.load(path.slice(2))
   })
 
-  // body id
+  // assign body id
   app.on("load", function(view) {
-    app.root.attr("id", view.type + "-page");
+    console.info(view.type);
+    $("#" + view.type).addClass("is-active")
+    // app.root.attr("id", view.type + "-page").removeClass("is-loading");
   })
 
 });
 
 
 
+// Search dropdown
 admin(function(app) {
 
   var form = $("#search"),
@@ -545,6 +547,7 @@ admin(function(app) {
 
 })
 
+// Draw stats
 admin(function(app) {
 
   var canvas = $("canvas", app.root),
@@ -560,6 +563,7 @@ admin(function(app) {
 
 })
 
+// Single user
 admin(function(app) {
 
   var root = $("#user"),
