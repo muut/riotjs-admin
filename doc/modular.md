@@ -288,7 +288,9 @@ All UI functionaly on the demp application are wrapped inside modules like this.
 admin({ page: location.hash.slice(2), root: $("body") })
 ```
 
-This will start the application with the configuration given on the argument and all the modules are called. You can access the API after the initialization as follows:
+This will start the application with the configuration given on the argument and all the modules are called. This is typically called after the DOM has been loaded on the bottom of the page or inside jQuery's `document.ready`. The given argument typically contains the initial path of the application as well as the root element.
+
+You can access the API after the initialization as follows:
 
 ``` javascript
 var api = admin(); // get access
@@ -305,23 +307,49 @@ Finally, the module interface is "white labeled". You can name the crucial modul
 
 ## Application lifecycle
 
-1) Initialize application: your_app_name(config) // see module interface below
-  This can be done on various stages:
-  - document.ready
-  - at the end of the page
-  - a user event (open an overlay for example)
+When the application starts a sequence of events happen. Here are typical steps:
 
-2) Load initial data
-  - after the initial data has been loaded from the server fire "ready" event which instantiates modules
+1. The call to server is made to load the initial view data
+2. The API is fully constructed
+3. The modules are initialized
+4. A "load" event is fired with the returned initial data
 
-2) Modules begin listening the events
-  - these can be on model and presenter layer
+An application that requires authentication needs an extra step handle unsuccesfull logins.
 
+Now let's look at the code:
 
+``` javascript
 
-## Login and logout
+// 1. load initial data from server
+backend.call("init", conf.page).always(function(data) {
 
-- application reloads
+  // 2. construct API
+  self.user = new User(self, data ? data.user : {}, backend);
+
+  // 3. all ready --> modules are loaded
+  self.trigger("ready");
+
+// init success
+}).done(function(data) {
+
+  // 4. load event
+  self.trigger("load", data.view)
+
+// init fail
+}).fail(function() {
+
+  self.user.one("login", function(data) {
+    $.extend(self.user, data.user);
+
+    // 4b. load event after succesfull login
+    self.trigger("load", data.view);
+
+  });
+
+})
+```
+
+The modules are initialized on the "ready" event after which they listen to all the events that occur after on runtime.
 
 
 

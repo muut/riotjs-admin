@@ -7,21 +7,22 @@ function User(app, data, backend) {
   $.extend(self, data);
 
   self.login = function(params, fn) {
-    self.one("login", fn);
 
-    return backend.call("login", params, function(data) {
+    backend.call("login", params, function(data) {
       self.trigger("login", data);
     });
+
+    return self.one("login", fn);
 
   };
 
   self.logout = function(fn) {
-    self.one("logout", fn);
 
     backend.call("logout", {}, function(data) {
       self.trigger("logout");
     });
 
+    return self.one("logout", fn);
   };
 
 }
