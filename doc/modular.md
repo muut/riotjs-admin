@@ -141,20 +141,31 @@ Note that other frameworks may call call this layer a "view", but in MVP this is
 
 ## Templating
 
-- start developing the application with HTML/CSS only, you can even leave the data there, add simple CSS class switches with JavaScript to work on those beautifully animated view switches
--
-- is essentially the contract between view and presenter
-- single presenter can work with multiple template tags
-- can reside inside <template/> tag, normal HTML or inside JavaScript
+I like to start developing a single-page application with just HTML and CSS only. It's amazing how much you can do with those. You can fine tune the design and user interface to almost complete state. By adding simple CSS class name switches with JavaScript you can even complete those beautifully animated view switches. In reality, of course you cannot keep your hands out of JavaScript but it's totally possible to show the customer a complete application UI without single line of the actual logic.
+
+What's best is that you can naturally continue from that HTML view to complete the whole application. In ideal world you even have the business logic completed and the API hasn't had any big changes for a while. Only presenters are left to hook these two together.
+
+This HTML mockup is your collection of templates. Before starting with the presenters you can move some of the HTML inside `<template/>` tags, typically the ones that are rendered multiple times inside loops.
+
 
 ### No logic
 
-- HTML is not originally meant to describe logic, JavaScript is
+Riot takes a strong position on not recommending logic inside the templates. There are multiple reasons for this:
 
-- template loops are mostly unnecessary. you need to iterate lists upon initialization as well as add items to the DOM on runtime. hard to handle with template loops without data binding (customers.js)
-- less logic on the view layer, less testable surface
-- you can use a different template language, if you demand logic. riot is just a library, remember
-- look for the logic on the [customer listing](https://github.com/moot/riotjs-admin/blob/master/src/ui/customers.js). There is a loop where single template is rendered multiple times. I can calculate the width value on JavaScript, which would add unnecessary complexity on the template
+1. Pure HTML is cleaner and passes W3C validator. A HTML mixed with a template syntax is messy.
+
+1. HTML is not inherently meant to describe logic
+
+1. Template loops are unnecessary on realtime applications where the iteratable lists change over time
+
+1. Logic inside HTML is hard or impossible to test
+
+1. Logicless templates are sometimes over a magnitude faster, especially on non- webkit browsers [(x)](#links)
+
+1. In complex loops it's natural to leave the data calculation logic for JavaScript and keep the templates clean.
+
+Look for the logic on the [customer listing](https://github.com/moot/riotjs-admin/blob/master/src/ui/customers.js). The single template is rendered multiple times on a loop and the `width` property is calculated with JavaScript and the [template](https://github.com/moot/riotjs-admin/blob/master/index.html#L11) remains simple.
+
 
 ## Routing
 
