@@ -8,7 +8,7 @@
     "Moot Inc.",
     "Other contributors"
   ],
-  "description": "A demo administration panel made with the Riot.js MVP framework",
+  "description": "A demo administration panel made with the Riot.js MVP library",
   "main": "riot.js",
   "keywords": [ "MVP", "MVC", "framework", "library"],
   "license": "MIT",

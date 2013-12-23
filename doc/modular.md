@@ -6,7 +6,7 @@
 # What is Riot.js?
 
 ## 1. A minimal approach to MV* world
-Riot is a client-side MVP framework to build modular single page applications. It weights 1kb and has 3 public methods so it's extremely simple and easy to learn. You'll be in complete control and there is no extra stuff on your way. You start small and add stuff as you need it. Not the other way around. Minimal approach helps everyone to understand the pieces that make your application.
+Riot is a client-side MVP library to build modular single page applications. It weights 1kb and has 3 public methods so it's extremely simple and easy to learn. You'll be in complete control and there is no extra stuff on your way. You start small and add stuff as you need it. Not the other way around. Minimal approach helps everyone to understand the pieces that make your application.
 
 ## 2. Vanilla JavaScript and jQuery
 Riot uses vanilla JavaScript to structure the code and jQuery to build the user interaction. You'll master classic design patterns and elementary JavaScript instead of framework specific idioms. Frameworks come and go but universal programming skills are forever.
@@ -169,7 +169,7 @@ Look for the logic on the [customer listing](https://github.com/moot/riotjs-admi
 
 ## Routing
 
-Routing or view switching is a core feature in single-page application. It's one of the main things that defines a framework. The demo application performs routing on the presenter layer as follows:
+Routing or view switching is a core feature in single-page application. It's one of the main things that defines a client-side framework. The demo application performs routing on the presenter layer as follows:
 
 
 ~~~ javascript
@@ -356,11 +356,11 @@ The modules are initialized on the "ready" event after which they listen to all 
 
 # Extensions (on later doc?)
 
+- Riot is just a list of functions, they just extend the jQuery space and not global space
 - standalone tools, something to use and not extend
 - usable everywhere, not just Riot (it's vanilla anyway)
 - extend jQuery if it's DOM related
 - if it's functionality, make it a function! there is a tendency to build unnecessary modularity around a simple function,
-- Riot is just a list of functions, they just extend the jQuery space and not global space
 - a list of functions and patterns that you can copy and paste, perhaps modify a bit
 - I'd like to see something like Gist but with better discoverability (search, tags etc)
 - Anyway, feel free to just copy code directly from the demo app (bootstrappting, promises)
