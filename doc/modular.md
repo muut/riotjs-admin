@@ -352,19 +352,31 @@ backend.call("init", conf.page).always(function(data) {
 The modules are initialized on the "ready" event after which they listen to all the events that occur after on runtime.
 
 
+# Extensions
 
+On the above example the `backend` call returns a simple promise interface that is constructed with following `$.observable` trick:
 
-# Extensions (on later doc?)
+``` javascript
+function Promise(fn) {
+  var self = $.observable(this);
 
-- Riot is just a list of functions, they just extend the jQuery space and not global space
-- standalone tools, something to use and not extend
-- usable everywhere, not just Riot (it's vanilla anyway)
-- extend jQuery if it's DOM related
-- if it's functionality, make it a function! there is a tendency to build unnecessary modularity around a simple function,
-- a list of functions and patterns that you can copy and paste, perhaps modify a bit
-- I'd like to see something like Gist but with better discoverability (search, tags etc)
-- Anyway, feel free to just copy code directly from the demo app (bootstrappting, promises)
+  $.each(['done', 'fail', 'always'], function(i, name) {
+    self[name] = function(arg) {
+      return self[$.isFunction(arg) ? 'on' : 'trigger'](name, arg);
+    };
 
+  });
+
+}
+```
+
+This is a generic objservable implementation that you can take advantage of in any JavaScript application, not just in MVP configurations.
+
+There is no specific extension mechanism in Riot. I think simple copy/pasteable functions are the the best re-usable components in JavaScript world. Riot itself is just 3 functions. They all extend the `$` namespace since it already exists on most websites (created if it doesn't exist) and it's not cool to set global variables.
+
+There is an unfortunate tendency to build unnecessary boilerplate around a simple functionality (options, repositories, build system) while it all could be expressed just a function: arguments in – a return value out. Simple functions are usable anywhere.
+
+I'd like to see something like Gist but with better discoverability (search, tags etc). A big mass of reusable functions that you can paste to your own project, perhaps modifying them a bit to your needs.
 
 
 # Testing (on later doc?)

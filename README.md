@@ -6,8 +6,7 @@ This is a demo single-page application made with Riot.js. It's a generic skeleto
 ### Features
 - actually something useful, just fork it and extend it to your needs
 - plain and minimal UI
-- login / logout (reloading), always a challenge
-- session management basics
+- authentication and session management
 - small: ~7.5kb minified, including Riot (3kb gzipped)
 - optional caching of data
 - no big customer listings, search does the job
