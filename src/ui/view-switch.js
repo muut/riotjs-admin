@@ -19,14 +19,15 @@ admin(function(app) {
 
   });
 
-  // assign is-active class name after server responds
+  // 3. Set "is-active" class name for the active page
   app.on("before:load", function() {
 
-    // is-active CSS class name deals with page switch animation
+    // remove existing class
     $(".page.is-active").removeClass("is-active");
 
   }).on("load", function(view) {
 
+    // set a new one
     $("#" + view.type + "-page").addClass("is-active");
 
   });

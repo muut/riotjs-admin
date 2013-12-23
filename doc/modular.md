@@ -3,39 +3,39 @@
 
 [TOC]
 
-# What is Riot.js?
+## What is Riot.js?
 
-## 1. A minimal approach to MV* world
+### 1. A minimal approach to MV* world
 Riot is a client-side MVP library to build modular single page applications. It weights 1kb and has 3 public methods so it's extremely simple and easy to learn. You'll be in complete control and there is no extra stuff on your way. You start small and add stuff as you need it. Not the other way around. Minimal approach helps everyone to understand the pieces that make your application.
 
-## 2. Vanilla JavaScript and jQuery
+### 2. Vanilla JavaScript and jQuery
 Riot uses vanilla JavaScript to structure the code and jQuery to build the user interaction. You'll master classic design patterns and elementary JavaScript instead of framework specific idioms. Frameworks come and go but universal programming skills are forever.
 
-## 3. Modular code
+### 3. Modular code
 The purpose of Riot is to build modular applications that are easy to manage and extend by multiple developers.  Your application will be "loosely coupled". Riot.js is all about modularity and the documentation centers solely on this purpose.
 
-## 4. API oriented
+### 4. API oriented
 The "frameworkless" nature of Riot forces you to focus on designing the API instead of building things around a certain framework. Your precious business logic is pure JavaScript that runs on server too.
 
-## 5. Demo application
+### 5. Demo application
 Riot.js comes with an example application that goes beyond a Todo MVC. It's an administration panel that is easy to continue with. Something useful. It's well documented and shows the basics of modular programming and API centered design.
 
-This documentation is split into two parts: 1) outlining the core concepts in modular single page applications and 2) code samples. After those you can peek the source code of the [demo application](https://github.com/moot/riotjs-admin) to get full understanding of modular Riot applications.
+This documentation starts by outlining the core concepts in modular single page applications and slowly increases the amount of code samples. After the documentation you can have a look at the source code of the [demo application](https://github.com/moot/riotjs-admin) to get full understanding of modular client-side applications.
 
 
-# Modular applications
+## Modular applications
 
 Your job is to build applications that are split into modules. Each module performs a logically discrete function and it's not dependent on other modules. This has major benefits:
 
-1) A large program can be broken into smaller and simpler units
-2) Modules can be added/removed/modified without breaking the application
-3) Several programmers can work on individual modules at the same time
-4) The program structure is easy to understand even for newcomers
-5) Ability to build a different subset of modules for different needs
+1. A large program can be broken into smaller and simpler units
+2. Modules can be added/removed/modified without affecting the other parts of the application
+3. Several programmers can work on individual modules at the same time
+4. The program structure is easy to understand even for newcomers
+5. Ability to build a different subset of modules for different needs
 
 Modularity is the single most important key for large scale applications.
 
-## What is modular?
+### What is modular?
 
 A modular application consists of two things:
 
@@ -52,7 +52,7 @@ To actually keep things modular is constant organization work. Things should be 
 
 
 
-# Model, View and Presenter
+## Model, View and Presenter
 
 How to build modular single-page applications?
 
@@ -82,7 +82,7 @@ Most of the current frameworks are an overkill since basically all you need is a
 
 
 
-# Model
+## Model
 
 Model is the application core. It's the most important part on your application since everything is build on top of it. It's the public interface to the rest of the world. You'll be using it, your team will be using it and 3rd parties are using it.
 
@@ -90,13 +90,12 @@ A well designed application core can be extended with loosely coupled modules an
 
 In Riot the model is a complete application and not just a helper object for the presenter layer as you might have seen on MVC configurations. It's also a good practice to keep your Models fat since the closer you come to the view the harder it becomes to test the assets. Anything that is difficult to test should have minimal behavior.
 
-
 This allows multiple different user interfaces to be build on top of the same Model. Think different Twitter client's for example (when things were fine with them). People could develop wildly different experiences on top of the same API without knowing about each other.
 
 
-## Designing the Model
+### Designing the Model
 
-Model is the starting point of the application design. You should reserve time for designing the Model and make it as simple as possible because you'll be spending lot of time with it later. Set the bar high. Think jQuery API.
+Model is the starting point of the application design (View is another, depending on the preference). You should reserve time for designing the Model and make it as simple as possible because you'll be spending lot of time with it later. Set the bar high. Think jQuery API.
 
 Two things to keep in mind:
 
@@ -108,27 +107,26 @@ Model is a domain specific thing. Think what your application does, what are the
 Keep these in mind when designing the properties, methods and events. Not going to go deeper here, but the API is the root of all good or evil.
 
 
+### Backend
 
-## Backend
-
-Riot does not include a separate backend component and this is purposely left open. Currently REST dominates the way of thinking but Web Sockets and real- time patterns are just around the corner, where RPC pattern makes more sense.
+Riot does not include a separate backend component. This is by design. Currently REST dominates the way of thinking but Web Sockets and real- time patterns are just around the corner, where RPC-style protocols makes more sense.
 
 Your backend interface can just have a generic `call` method and the underlying implementation can be changed. Be it REST, RPC or a custom AJAX based thing.
 
 
 
-# View
+## View
 
 The view is what user sees and interacts with. The HTML page on a web browser. What's actually interesting for a JavaScript developer is the document object model (DOM). You can do all kinds of creative tricks to build user experiences. Most importantly it's a source of events:
 
-1) User events: click, scroll, keypress, mousemove etc..
-2) Document ready event
-3) URL change events
+1. User events: click, scroll, keypress, mousemove etc.
+2. Document's ready event
+3. URL change events
 
 These events are in special interest for Presenters, which perform the actual manipulation of the view. The view itself has no logic – just plain old HTML and CSS code.
 
 
-# Presenter
+## Presenter
 
 Presenter is the important middleman between the View and Model. Each presenter is a loosely-coupled module performing a discrete function and can be developed individually.
 
@@ -139,16 +137,16 @@ Presenter doesn't make any assertions about the business model.
 Note that other frameworks may call call this layer a "view", but in MVP this is called the "presenter".
 
 
-## Templating
+### Templating
 
-I like to start developing a single-page application with just HTML and CSS only. It's amazing how much you can do with those. You can fine tune the design and user interface to almost complete state. By adding simple CSS class name switches with JavaScript you can even complete those beautifully animated view switches. In reality, of course you cannot keep your hands out of JavaScript but it's totally possible to show the customer a complete application UI without single line of the actual logic.
+Sometimes I like to start developing a single-page application with just HTML and CSS only. It's amazing how much you can do with those. You can fine tune the design and user interface to almost complete state. By adding simple CSS class name switches with JavaScript you can even complete those beautifully animated view switches. In reality, of course you cannot keep your hands out of JavaScript but it's totally possible to show the customer a complete application UI without single line of the actual logic.
 
 What's best is that you can naturally continue from that HTML view to complete the whole application. In ideal world you even have the business logic completed and the API hasn't had any big changes for a while. Only presenters are left to hook these two together.
 
 This HTML mockup is your collection of templates. Before starting with the presenters you can move some of the HTML inside `<template/>` tags, typically the ones that are rendered multiple times inside loops.
 
 
-### No logic
+#### No logic
 
 Riot takes a strong position on not recommending logic inside the templates. There are multiple reasons for this:
 
@@ -167,13 +165,13 @@ Riot takes a strong position on not recommending logic inside the templates. The
 Look for the logic on the [customer listing](https://github.com/moot/riotjs-admin/blob/master/src/ui/customers.js). The single template is rendered multiple times on a loop and the `width` property is calculated with JavaScript and the [template](https://github.com/moot/riotjs-admin/blob/master/index.html#L11) remains simple.
 
 
-## Routing
+### Routing
 
 Routing or view switching is a core feature in single-page application. It's one of the main things that defines a client-side framework. The demo application performs routing on the presenter layer as follows:
 
 
 ~~~ javascript
-// All links that start with "#/" calls $.route()
+// All links that start with "#/" calls Riot's $.route(path) function
 $(document).on("click", "a[href^='#/']", function() {
 
   // $.route changes URL, notifies listeners and deals with back button
@@ -182,34 +180,36 @@ $(document).on("click", "a[href^='#/']", function() {
 });
 
 
-// Listen to URL changes
+// Call API method to load stuff from server each time the URL changes
 $.route(function(path) {
-
-  // Call API method to load stuff from server
   app.load(path.slice(2));
-
-  // Remove is-active CSS class, that deals with page switch animation
-  $(".page.is-active").removeClass("is-active");
-
 });
 
-// assign is-active class name after server responds
-app.on("load", function(view) {
+
+// Set "is-active" class name for the active page
+app.on("before:load", function() {
+
+  // remove existing class
+  $(".page.is-active").removeClass("is-active");
+
+}).on("load", function(view) {
+
+  // set a new one
   $("#" + view.type + "-page").addClass("is-active");
 
 });
 ~~~
 
-The above code assumes that the API supports a generic `load` method and has a "load" event to signal when the load finishes. The returned `view` has a type parameter that we use to grab the correct node from the page and assign a CSS class "is-active" for it. The page switching animation is implemented with CSS transition.
+The above code assumes that your API has a generic `load` method to load new "pages" from the server. The returned `view` has a type parameter that we use to grab the correct node from the page and assign a CSS class "is-active" for it. The page switching animation is implemented with CSS transition.
 
-The actual handling of the view is dealt by a view specific different presenter. The above code only handles the switch.
+The ability to load new data from the server is designed on the API. Here the `$.route` behaviour is just a thin layer above the API to deal with the back button. It's completely on the presenter layer. The API can focus on the business logic only unaware of the web layer.
 
-The ability to load new data from the server is designed on your API that the presenters can take advantage of. Here the `$.route` behaviour is just a thin layer above the API to deal with the back button. It's completely on the presenter layer. The API can focus on the business logic only unaware of the web layer.
+The change of URL via user clicks or back button is basically just an event thrown by the view. Just like a window scroll event. This kind or routing is a very generic and transparent and is easy to customize.
+
+The above code only handles the switch and the actual rendering of the returned view object is dealt by a different, view specific presenter.
 
 
-
-
-## jQuery
+### jQuery
 
 jQuery exists because the vanilla DOM is a complete disaster to work with. jQuery does a massive cleanup by exposing the DOM for the page developer in an elegant and friendly way.
 
@@ -228,7 +228,7 @@ jQuery API is a perfect match for Riot. It's an ultimate tool for building prese
 Id's and class names provide a natural mechanism to hook functionality, just like you can hook styling with CSS.
 
 
-## Two-way data binding
+### Two-way data binding
 
 Two-way data binding is the opposite of what jQuery does. You explicitly define the behaviour for a HTML element. Think inline style or an `onclick` attribute. It breaks modularity since the logic is hardcoded to an element and the behaviour is not defined inside a module.
 
@@ -298,9 +298,9 @@ var api = admin(); // get access
 api.load("customers"); // call an API method
 ```
 
-You can try that on the JavaScript console. All features that you can do with the UI are also available on the API. This is ensured by the strict separation of API and presenter modules.
+Try that on the JavaScript console! All features that you can do with the UI are also available on the API. This is ensured by the strict separation of API and presenter modules.
 
-Now your application is nicely split into decoupled modules and there is a simple way to add new modules. Each of your team members has only one, global `admin` method to use and the full API is given as the first argument to the module. The modules are isolated and can be freely added / removed without breaking other parts of the application.
+Now your application is nicely split into decoupled modules and there is a simple way to add new modules. Each of your team members has only one, global `admin` method to use and the full API is given as the first argument to the module. The modules are isolated and can be freely added / removed without breaking other parts of the application. You can have modules on both on the API layer and presenter layer.
 
 Finally, the module interface is "white labeled". You can name the crucial module interface after your application and there is no 3rd party framework to force the naming scheme. Much cooler!
 
@@ -352,7 +352,7 @@ backend.call("init", conf.page).always(function(data) {
 The modules are initialized on the "ready" event after which they listen to all the events that occur after on runtime.
 
 
-# Extensions
+## Extensions
 
 On the above example the `backend` call returns a simple promise interface that is constructed with following `$.observable` trick:
 
@@ -377,20 +377,6 @@ There is no specific extension mechanism in Riot. I think simple copy/pasteable 
 There is an unfortunate tendency to build unnecessary boilerplate around a simple functionality (options, repositories, build system) while it all could be expressed just a function: arguments in – a return value out. Simple functions are usable anywhere.
 
 I'd like to see something like Gist but with better discoverability (search, tags etc). A big mass of reusable functions that you can paste to your own project, perhaps modifying them a bit to your needs.
-
-
-# Testing (on later doc?)
-
-The driving reason to use Passive View is to enhance testability
-
-
-"Humble View"
-Humble Object - any object that is difficult to test should have minimal behavior.
-http://martinfowler.com/eaaDev/uiArchs.html#Model-view-presentermvp
-
-- models
-- presenters
-- views: CSS in different states
 
 
 
