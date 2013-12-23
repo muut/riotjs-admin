@@ -125,6 +125,9 @@ function Admin(conf) {
   $.extend(self, conf);
 
   self.load = function(page, fn) {
+
+    self.trigger("before:load");
+
     self.one("load", fn);
 
     backend.call("load", page, function(view) {
@@ -163,33 +166,6 @@ function Admin(conf) {
   })
 
 }
-
-var top = is_node ? exports : window,
-  instance;
-
-
-// The extension mechanism. Ability to split the application into loosely-coupled modules
-top.admin = $.observable(function(arg) {
-
-  if (!arg) return instance;
-
-  // admin(conf) --> initialize application
-  if ($.isFunction(arg)) {
-    admin.on("ready", arg);
-
-  // admin(fn) --> add a module
-  } else {
-
-    instance = new Admin(arg);
-
-    instance.on("ready", function() {
-      admin.trigger.call(instance, "ready", instance);
-    });
-
-  }
-
-});
-
 
 
 // session management goes here, needs some cleanup to make it easier to read / understand
@@ -245,6 +221,37 @@ function Promise(fn) {
   });
 
 }
+
+
+// The ability to split the application into loosely-coupled modules
+
+// Works on client and server
+var top = is_node ? exports : window,
+  instance;
+
+
+top.admin = $.observable(function(arg) {
+
+  // admin() --> return instance
+  if (!arg) return instance;
+
+  // admin(fn) --> add a new module
+  if ($.isFunction(arg)) {
+    admin.on("ready", arg);
+
+  // admin(conf) --> initialize the application
+  } else {
+
+    instance = new Admin(arg);
+
+    instance.on("ready", function() {
+      admin.trigger("ready", instance);
+    });
+
+  }
+
+});
+
 
 
 // Test data ("fixtures")
@@ -563,13 +570,16 @@ admin(function(app) {
     // Call API method to load stuff from server
     app.load(path.slice(2));
 
-    // is-active CSS class name deals with page switch animation
-    $(".page.is-active").removeClass("is-active");
-
   });
 
   // assign is-active class name after server responds
-  app.on("load", function(view) {
+  app.on("before:load", function() {
+
+    // is-active CSS class name deals with page switch animation
+    $(".page.is-active").removeClass("is-active");
+
+  }).on("load", function(view) {
+
     $("#" + view.type + "-page").addClass("is-active");
 
   });

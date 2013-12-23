@@ -17,13 +17,16 @@ admin(function(app) {
     // Call API method to load stuff from server
     app.load(path.slice(2));
 
-    // is-active CSS class name deals with page switch animation
-    $(".page.is-active").removeClass("is-active");
-
   });
 
   // assign is-active class name after server responds
-  app.on("load", function(view) {
+  app.on("before:load", function() {
+
+    // is-active CSS class name deals with page switch animation
+    $(".page.is-active").removeClass("is-active");
+
+  }).on("load", function(view) {
+
     $("#" + view.type + "-page").addClass("is-active");
 
   });

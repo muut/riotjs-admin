@@ -8,6 +8,9 @@ function Admin(conf) {
   $.extend(self, conf);
 
   self.load = function(page, fn) {
+
+    self.trigger("before:load");
+
     self.one("load", fn);
 
     backend.call("load", page, function(view) {
@@ -46,30 +49,3 @@ function Admin(conf) {
   })
 
 }
-
-var top = is_node ? exports : window,
-  instance;
-
-
-// The extension mechanism. Ability to split the application into loosely-coupled modules
-top.admin = $.observable(function(arg) {
-
-  if (!arg) return instance;
-
-  // admin(conf) --> initialize application
-  if ($.isFunction(arg)) {
-    admin.on("ready", arg);
-
-  // admin(fn) --> add a module
-  } else {
-
-    instance = new Admin(arg);
-
-    instance.on("ready", function() {
-      admin.trigger.call(instance, "ready", instance);
-    });
-
-  }
-
-});
-

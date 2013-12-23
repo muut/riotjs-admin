@@ -241,14 +241,66 @@ This may seem like a small syntaxical detail but it's really about the big pictu
 Two-way data binding is best suited for simple CRUD apps and quick prototypes. Riot will never embrace two-way data-binding since it violates modularity.
 
 
-# The code
+## Module interface
 
-Now let's focus to actual coding. Here is the goal:
+Now let's focus on coding. We want a simple way to extend the application core with modules. Here's a nice `$.observable` trick to split the application into loosely-coupled modules:
 
-- decoupled modules
-- one signature to extend the application
-- full, documented API is given on the argument
-- each team member can work on their own module, without breaking the core
+
+``` js
+// works on client and server
+var top = is_node ? exports : window,
+  instance;
+
+top.admin = $.observable(function(arg) {
+  if (!arg) return instance;
+
+  if ($.isFunction(arg)) {
+    admin.on("ready", arg);
+
+  } else {
+    instance = new Admin(arg);
+
+    instance.on("ready", function() {
+      admin.trigger("ready", instance);
+    });
+
+  }
+
+});
+```
+
+The above code expopses a single global variable `admin` that can be used as follows:
+
+``` javascript
+admin(function(api) {
+  // module #1 logic, API is given as argument
+})
+
+admin(function(api) {
+  // module #2 logic
+})
+```
+
+All UI functionaly on the demp application are wrapped inside modules like this. Now after you have all code wrapped inside the modules you need to launch the application:
+
+
+``` javascript
+admin({ page: location.hash.slice(2), root: $("body") })
+```
+
+This will start the application with the configuration given on the argument and all the modules are called. You can access the API after the initialization as follows:
+
+``` javascript
+var api = admin(); // get access
+
+api.load("customers"); // call an API method
+```
+
+You can try that on the JavaScript console. All features that you can do with the UI are also available on the API. This is ensured by the strict separation of API and presenter modules.
+
+Now your application is nicely split into decoupled modules and there is a simple way to add new modules. Each of your team members has only one, global `admin` method to use and the full API is given as the first argument to the module. The modules are isolated and can be freely added / removed without breaking other parts of the application.
+
+Finally, the module interface is "white labeled". You can name the crucial module interface after your application and there is no 3rd party framework to force the naming scheme. Much cooler!
 
 
 ## Application lifecycle
@@ -265,30 +317,6 @@ Now let's focus to actual coding. Here is the goal:
 2) Modules begin listening the events
   - these can be on model and presenter layer
 
-
-## Module interface
-
-``` js
-// a nice observable trick to manage bootstrapping of a single page application
-var spa = $.observable(function(fn) {
-   spa.on("ready", fn)
-})
-
-// 1st extension
-spa(function(app) {
-   console.info("model logic");
-})
-
-// 2nd extension
-spa(function(app) {
-   console.info("presenter logic");
-})
-
-// launch applicaiton
-$(function() {
-   spa.trigger("ready", { hello: "world" });
-})
-```
 
 
 ## Login and logout
