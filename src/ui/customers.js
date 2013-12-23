@@ -15,6 +15,7 @@ admin(function(app) {
     $.each(view, function(i, entry) {
       var val = entry.val;
       if (!i) max = val;
+
       entry.width = Math.round(val / max * 100);
 
       root.append($.render(tmpl, entry))

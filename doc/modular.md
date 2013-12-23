@@ -11,11 +11,14 @@ Riot is a client-side MVP framework to build modular single page applications. I
 ## 2. Vanilla JavaScript and jQuery
 Riot uses vanilla JavaScript to structure the code and jQuery to build the user interaction. You'll master classic design patterns and elementary JavaScript instead of framework specific idioms. Frameworks come and go but universal programming skills are forever.
 
-## 3. Focus on modular design
-The purpose of Riot is to build modular applications that are easy to manage and extend by multiple developers. Your application will be "loosely coupled". Riot.js is all about modularity and the documentation centers solely on this purpose.
+## 3. Modular code
+The purpose of Riot is to build modular applications that are easy to manage and extend by multiple developers.  Your application will be "loosely coupled". Riot.js is all about modularity and the documentation centers solely on this purpose.
 
-## 4. Demo application
-Riot.js comes with an example application that goes beyond a Todo MVC. It's an administration panel that is easy to continue with. Something useful. It's well documented and shows the basics of modular programming.
+## 4. API oriented
+The "frameworkless" nature of Riot forces you to focus on designing the API instead of building things around a certain framework. Your precious business logic is pure JavaScript that runs on server too.
+
+## 5. Demo application
+Riot.js comes with an example application that goes beyond a Todo MVC. It's an administration panel that is easy to continue with. Something useful. It's well documented and shows the basics of modular programming and API centered design.
 
 This documentation is split into two parts: 1) outlining the core concepts in modular single page applications and 2) code samples. After those you can peek the source code of the [demo application](https://github.com/moot/riotjs-admin) to get full understanding of modular Riot applications.
 
@@ -131,64 +134,100 @@ Presenter is the important middleman between the View and Model. Each presenter 
 
 Presenter listens to the View events and calls the appropriate methods on the API. It also listens to the Model events and manipulates the DOM accordingly.
 
-- Think of making a new Twitter client
-- presenter "hook" to the view using CSS- like selectors (jQuery)
-- explicitly define links to emit an URL change event
-- presenter shouldn't be making assertions about the business model
-- all decorative stuff such as localization and date formatting belong here
-- other frameworks call this layer a "view", but in MVP this is called the "presenter"
+Presenter doesn't make any assertions about the business model.
+
+Note that other frameworks may call call this layer a "view", but in MVP this is called the "presenter".
 
 
 ## Templating
 
-- HTML is not originally meant to describe logic, JavaScript is
-- <template/> tag, the contract between view and presenter
-- template loops are mostly unnecessary. you need to iterate lists upon initialization as well as add items to the DOM on runtime. hard to handle with template loops without data binding
-- if logic is absolutely crucial, feel free to use your favorite template engine (overrated, why?)
+- start developing the application with HTML/CSS only, you can even leave the data there, add simple CSS class switches with JavaScript to work on those beautifully animated view switches
+-
+- is essentially the contract between view and presenter
 - single presenter can work with multiple template tags
+- can reside inside <template/> tag, normal HTML or inside JavaScript
+
+### No logic
+
+- HTML is not originally meant to describe logic, JavaScript is
+
+- template loops are mostly unnecessary. you need to iterate lists upon initialization as well as add items to the DOM on runtime. hard to handle with template loops without data binding (customers.js)
+- less logic on the view layer, less testable surface
+- you can use a different template language, if you demand logic. riot is just a library, remember
+- look for the logic on the [customer listing](https://github.com/moot/riotjs-admin/blob/master/src/ui/customers.js). There is a loop where single template is rendered multiple times. I can calculate the width value on JavaScript, which would add unnecessary complexity on the template
 
 ## Routing
 
-Routing or view switching is a core feature in single-page application. It's one of the main things that defines a framework. Riot performs routing as follows:
+Routing or view switching is a core feature in single-page application. It's one of the main things that defines a framework. The demo application performs routing on the presenter layer as follows:
 
-1) You select links from the page that perform view switching. They call the ´$.route()` method with arbitary parameters
 
-2) Riot changes the URL based on the argument and notifies all listeners that are observing the route event
+~~~ javascript
+// All links that start with "#/" calls $.route()
+$(document).on("click", "a[href^='#/']", function() {
 
-3) The listeners inside the modules react accordingly
+  // $.route changes URL, notifies listeners and deals with back button
+  $.route($(this).attr("href"));
 
-Routing is basically just a special event that modules listen to.
+});
 
-Typically one of the listeners will load data from the server that correspond to the route. The demo application calls
 
-Before and after events (cancel view switch)
-How do you inject page object for the view?
+// Listen to URL changes
+$.route(function(path) {
+
+  // Call API method to load stuff from server
+  app.load(path.slice(2));
+
+  // Remove is-active CSS class, that deals with page switch animation
+  $(".page.is-active").removeClass("is-active");
+
+});
+
+// assign is-active class name after server responds
+app.on("load", function(view) {
+  $("#" + view.type + "-page").addClass("is-active");
+
+});
+~~~
+
+The above code assumes that the API supports a generic `load` method and has a "load" event to signal when the load finishes. The returned `view` has a type parameter that we use to grab the correct node from the page and assign a CSS class "is-active" for it. The page switching animation is implemented with CSS transition.
+
+The actual handling of the view is dealt by a view specific different presenter. The above code only handles the switch.
+
+The ability to load new data from the server is designed on your API that the presenters can take advantage of. Here the `$.route` behaviour is just a thin layer above the API to deal with the back button. It's completely on the presenter layer. The API can focus on the business logic only unaware of the web layer.
 
 
 
 
 ## jQuery
 
-- jQuery exists because the vanilla DOM is a complete disaster to work with. jQuery does a massive cleanup by exposing the DOM in an elegant and powerful way.
+jQuery exists because the vanilla DOM is a complete disaster to work with. jQuery does a massive cleanup by exposing the DOM for the page developer in an elegant and friendly way.
 
-- there are other implementations [x] too, but the real credits go to John Resig. He made the whole thing. The jQuery API is a standard interface that has multiple implementations. It's that good.
+There are other implementations [(x)](#links) too, but the real credits go to John Resig. He designed the API, which has become a standarad to set a target for other implementation.
 
-- And when Riot manifests about jQuery it's a manifest of using the jQuery API. Feel free to use any of the implementations. The advantages of using jQuery itself are following
+Feel free to use any of the implementations but the advantages of using jQuery itself are following
 
-- best cross browser support, IE6 is still there
-- biggest test suite
-- already there on websites, possibly cached from CDN's
+- best cross browser support, including IE6
+- biggest test suite, most reliable
+- already present on a website, possibly cached from a CDN
 
+jQuery is currently found on 56% of all websites and 92.0% of all the websites whose JavaScript library is known [(x)](#links).
 
-## Data binding
-- here modularity means that you or a new employee can start adding features to the view just by binding new functionality. Select the same elements and attach stuff. This module can later be removed. Modularity is not about small syntax details, it's about the big picture. Can you attach new features without touching the other parts of the client.
+jQuery API is a perfect match for Riot. It's an ultimate tool for building presenters. The jQuery selectors provide a light way to bind the model to the view. And there can be multiple presenters dealing with the same set of HTML elements withtout them being aware of each other. It doesn't break modularity.
 
-Riot is not a data-binding framework. It does not aim to be. Data binding violates modularity.
-
-AngularJS explicitly states that its suited best for standard CRUD apps. If you need to do something which requires touching the DOM or some low level manipulation, better stay away from it.
+Id's and class names provide a natural mechanism to hook functionality, just like you can hook styling with CSS.
 
 
+## Two-way data binding
 
+Two-way data binding is the opposite of what jQuery does. You explicitly define the behaviour for a HTML element. Think inline style or an `onclick` attribute. It breaks modularity since the logic is hardcoded to an element and the behaviour is not defined inside a module.
+
+When the behaviour is attached to the element from outside using a jQuery selector the architecture becomes modular. You can add and remove features without any impact to the other parts of the application.
+
+Think of a new employee for example. One can build a separate module, select the same elements from the view and bind new functionality. And this module can later be removed. This is simply not possible with two-way binding because of the hardcoded nature – other team members will be affected.
+
+This may seem like a small syntaxical detail but it's really about the big picture. Can you attach new features without touching the other parts of the client?
+
+Two-way data binding is best suited for simple CRUD apps and quick prototypes. Riot will never embrace two-way data-binding since it violates modularity.
 
 
 # The code
@@ -241,10 +280,9 @@ $(function() {
 ```
 
 
-## View switching
+## Login and logout
 
-- $(document).on("click.todo", 'a[href~="#"]', $.route);
-- application reloads: login / logout
+- application reloads
 
 
 
@@ -257,9 +295,8 @@ $(function() {
 - if it's functionality, make it a function! there is a tendency to build unnecessary modularity around a simple function,
 - Riot is just a list of functions, they just extend the jQuery space and not global space
 - a list of functions and patterns that you can copy and paste, perhaps modify a bit
-- I'd dream about something like Gist but with awesome discoverability, better search ...browsable with tags
-- Anyway, here is a starting point: riotjs/gists/ (backbone type presenter layout, promise interface)
-
+- I'd like to see something like Gist but with better discoverability (search, tags etc)
+- Anyway, feel free to just copy code directly from the demo app (bootstrappting, promises)
 
 
 

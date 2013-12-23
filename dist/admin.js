@@ -432,6 +432,7 @@ admin(function(app) {
     $.each(view, function(i, entry) {
       var val = entry.val;
       if (!i) max = val;
+
       entry.width = Math.round(val / max * 100);
 
       root.append($.render(tmpl, entry))
@@ -479,38 +480,6 @@ admin(function(app) {
   toggle(!!user.username);
 
 })
-
-// View switching (= routing)
-
-admin(function(app) {
-
-  // 1. select elements from the page that trigger view switchig
-  $(document).on("click", "a[href^='#/']", function() {
-
-    // Call $.route method with arbitary arguments
-    // Riot takes care of the URL change behind the scenes
-    $.route($(this).attr("href"));
-
-  })
-
-
-  // 2. unlimited $.route callbacks allowed
-  $.route(function(path) {
-    $(".page.is-active").removeClass("is-active");
-    // app.root.attr("id", page + "-page").addClass("is-loading");
-    app.load(path.slice(2))
-  })
-
-  // assign body id
-  app.on("load", function(view) {
-    console.info(view.type);
-    $("#" + view.type).addClass("is-active")
-    // app.root.attr("id", view.type + "-page").removeClass("is-loading");
-  })
-
-});
-
-
 
 // Search dropdown
 admin(function(app) {
@@ -575,3 +544,35 @@ admin(function(app) {
   })
 
 });
+
+// Handle (animated) view switching, aka. routing
+admin(function(app) {
+
+  // 1. select elements from the page to call $.route(path)
+  $(document).on("click", "a[href^='#/']", function() {
+
+    // Riot changes the URL, notifies listeners and takes care of the back button
+    $.route($(this).attr("href"));
+
+  });
+
+
+  // 2. listen to route clicks and back button
+  $.route(function(path) {
+
+    // Call API method to load stuff from server
+    app.load(path.slice(2));
+
+    // is-active CSS class name deals with page switch animation
+    $(".page.is-active").removeClass("is-active");
+
+  });
+
+  // assign is-active class name after server responds
+  app.on("load", function(view) {
+    $("#" + view.type + "-page").addClass("is-active");
+
+  });
+
+});
+
