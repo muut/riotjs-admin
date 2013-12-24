@@ -1,12 +1,13 @@
 
-// The API
+// The admin API
 function Admin(conf) {
 
   var self = $.observable(this),
-      backend = new Backend({ cache: true });
+      backend = new Backend(conf);
 
   $.extend(self, conf);
 
+  // load a given page from the server
   self.load = function(page, fn) {
 
     self.trigger("before:load");
@@ -15,21 +16,18 @@ function Admin(conf) {
 
     backend.call("load", page, function(view) {
       self.trigger("load", view)
-    })
+    });
+
   };
 
 
+  // same as load("search")
   self.search = function(query, fn) {
     return backend.call("search", query, fn);
   };
 
 
-  self.on("load", function(view) {
-    self.trigger("load:" + view.type, view.data, view.path);
-    self.page = view.type;
-  });
-
-
+  // initialization
   backend.call("init", conf.page).always(function(data) {
     self.user = new User(self, data ? data.user : {}, backend);
     self.trigger("ready");
@@ -46,6 +44,11 @@ function Admin(conf) {
 
     });
 
-  })
+  });
+
+  self.on("load", function(view) {
+    self.trigger("load:" + view.type, view.data, view.path);
+    self.page = view.type;
+  });
 
 }

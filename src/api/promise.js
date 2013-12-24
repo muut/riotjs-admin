@@ -1,5 +1,6 @@
 
-// Another good use case for observables
+// A generic promiese interface by using $.observable
+
 function Promise(fn) {
   var self = $.observable(this);
 

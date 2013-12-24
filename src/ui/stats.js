@@ -8,9 +8,9 @@ admin(function(app) {
   app.on("load:stats", function(stats) {
 
     $.each(stats, function(i, data) {
-      canvas.eq(i).graph2(data, colors[i])
+      canvas.eq(i).graph2(data, colors[i]);
     });
 
-  })
+  });
 
-})
+});

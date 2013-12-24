@@ -90,7 +90,16 @@
 
     <script src="bower_components/jquery/jquery.min.js"></script>
     <script src="dist/admin.js"></script>
-    <script>admin({ page: location.hash.slice(2), root: $("body") })</script>
+
+    <!-- initialize application -->
+    <script>
+      admin({
+        page: location.hash.slice(2),
+        root: $("body"),
+        debug: true,
+        cache: false
+      })
+    </script>
 
   </body>
 

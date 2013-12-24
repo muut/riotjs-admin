@@ -1,11 +1,11 @@
 
 // Test data ("fixtures")
 
-function graph(mult) {
+function graph(multiplier) {
   var arr = [];
 
   for (var i = 0; i < 30; i++) {
-    arr[i] = Math.random() * mult * i;
+    arr[i] = Math.random() * multiplier * i;
   }
 
   return arr;
@@ -47,9 +47,9 @@ var test_data = {
   },
 
   // init
-  init: function(page, logged_in) {
+  init: function(page, sessionId) {
 
-    return !logged_in ? false : {
+    return !sessionId ? false : {
       user: {
         email: "joe@riotjs.com",
         name: "Joe Rebellous",

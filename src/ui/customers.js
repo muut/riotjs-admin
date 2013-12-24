@@ -12,15 +12,16 @@ admin(function(app) {
     // clear existing data
     root.empty();
 
+    // add new ones
     $.each(view, function(i, entry) {
-      var val = entry.val;
-      if (!i) max = val;
+      if (!i) max = entry.val;
 
-      entry.width = Math.round(val / max * 100);
+      entry.width = Math.round(entry.val / max * 100);
 
-      root.append($.render(tmpl, entry))
-    })
+      root.append($.render(tmpl, entry));
 
-  })
+    });
 
-})
+  });
+
+});

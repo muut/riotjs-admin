@@ -16,15 +16,15 @@ admin(function(app) {
 
     }).fail(function() {
       console.info("login failed");
-    })
+    });
 
-  })
+  });
 
   // logout
   $("#logout").click(function(e) {
     e.preventDefault();
     user.logout();
-  })
+  });
 
   function toggle(is_logged) {
     app.root.toggleClass("is-logged", is_logged).toggleClass("is-not-logged", !is_logged)
@@ -32,8 +32,8 @@ admin(function(app) {
 
   user.on("login logout", function(type) {
     toggle(type == 'login');
-  })
+  });
 
   toggle(!!user.username);
 
-})
+});

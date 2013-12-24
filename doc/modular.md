@@ -139,7 +139,7 @@ Note that other frameworks may call call this layer a "view", but in MVP this is
 
 ### Templating
 
-Sometimes I like to start developing a single-page application with just HTML and CSS only. It's amazing how much you can do with those. You can fine tune the design and user interface to almost complete state. By adding simple CSS class name switches with JavaScript you can even complete those beautifully animated view switches. In reality, of course you cannot keep your hands out of JavaScript but it's totally possible to show the customer a complete application UI without single line of the actual logic.
+Sometimes I like to start developing a single-page application with just HTML and CSS only. It's amazing how much you can do with those. You can fine tune the design and user interface to a nearly complete state. By adding simple CSS class name switches with JavaScript you can even make those beautifully animated view switches. In reality, of course you cannot keep your hands out of JavaScript but it's totally possible to show the customer a complete application UI without single line of the actual logic.
 
 What's best is that you can naturally continue from that HTML view to complete the whole application. In ideal world you even have the business logic completed and the API hasn't had any big changes for a while. Only presenters are left to hook these two together.
 
@@ -374,7 +374,7 @@ This is a generic objservable implementation that you can take advantage of in a
 
 There is no specific extension mechanism in Riot. I think simple copy/pasteable functions are the the best re-usable components in JavaScript world. Riot itself is just 3 functions. They all extend the `$` namespace since it already exists on most websites (created if it doesn't exist) and it's not cool to set global variables.
 
-There is an unfortunate tendency to build unnecessary boilerplate around a simple functionality (options, repositories, build system) while it all could be expressed just a function: arguments in – a return value out. Simple functions are usable anywhere.
+There is an unfortunate tendency to build unnecessary boilerplate around simple functionality (options, repositories, build systems etc..) while it all could be expressed with just a function: arguments in – a return value out. Simple functions are usable anywhere.
 
 I'd like to see something like Gist but with better discoverability (search, tags etc). A big mass of reusable functions that you can paste to your own project, perhaps modifying them a bit to your needs.
 

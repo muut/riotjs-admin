@@ -1,21 +1,21 @@
 
-// session management goes here, needs some cleanup to make it easier to read / understand
+// Fake backend to simulate a real thing
 function Backend(conf) {
 
   var self = this,
-    cache = {};
+    cache = {},
+    debug = conf.debug && typeof console != 'undefined';
 
+  //
   self.call = function(method, arg, fn) {
 
-    console.info("->", method, arg);
-
-    var logged_in = method == 'init' && localStorage.sessionId,
-        ret = test_data[method](arg, logged_in),
+    var ret = test_data[method](arg, localStorage.sessionId),
         promise = new Promise(fn);
 
-    promise.done(fn);
+    // debug message
+    if (debug) console.info("->", method, arg);
 
-    // optional caching
+    // configurable caching for the "load" method
     if (conf.cache && method == 'load') {
       if (cache[arg]) return promise.done(cache[arg])
       cache[arg] = ret;
@@ -23,15 +23,20 @@ function Backend(conf) {
 
     // session management
     if (ret.sessionId) localStorage.sessionId = ret.sessionId;
-    if (method == 'logout') localStorage.removeItem("sessionId")
+    else if (method == 'logout') localStorage.removeItem("sessionId");
 
+
+    // fake delay for the call
     setTimeout(function() {
+      if (debug) console.info("<-", ret);
+
       promise.always(ret);
       promise[ret === false ? 'fail' : 'done'](ret);
 
-      console.info("<-", ret);
-
     }, 400)
+
+    // given callback
+    promise.done(fn);
 
     return promise;
 

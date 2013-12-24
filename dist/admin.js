@@ -116,14 +116,15 @@ $.route = function(to) {
 
 };})(typeof top == "object" ? window.$ || (window.$ = {}) : exports);
 ;(function(is_node) {
-// The API
+// The admin API
 function Admin(conf) {
 
   var self = $.observable(this),
-      backend = new Backend({ cache: true });
+      backend = new Backend(conf);
 
   $.extend(self, conf);
 
+  // load a given page from the server
   self.load = function(page, fn) {
 
     self.trigger("before:load");
@@ -132,21 +133,18 @@ function Admin(conf) {
 
     backend.call("load", page, function(view) {
       self.trigger("load", view)
-    })
+    });
+
   };
 
 
+  // same as load("search")
   self.search = function(query, fn) {
     return backend.call("search", query, fn);
   };
 
 
-  self.on("load", function(view) {
-    self.trigger("load:" + view.type, view.data, view.path);
-    self.page = view.type;
-  });
-
-
+  // initialization
   backend.call("init", conf.page).always(function(data) {
     self.user = new User(self, data ? data.user : {}, backend);
     self.trigger("ready");
@@ -163,28 +161,33 @@ function Admin(conf) {
 
     });
 
-  })
+  });
+
+  self.on("load", function(view) {
+    self.trigger("load:" + view.type, view.data, view.path);
+    self.page = view.type;
+  });
 
 }
 
 
-// session management goes here, needs some cleanup to make it easier to read / understand
+// Fake backend to simulate a real thing
 function Backend(conf) {
 
   var self = this,
-    cache = {};
+    cache = {},
+    debug = conf.debug && typeof console != 'undefined';
 
+  //
   self.call = function(method, arg, fn) {
 
-    console.info("->", method, arg);
-
-    var logged_in = method == 'init' && localStorage.sessionId,
-        ret = test_data[method](arg, logged_in),
+    var ret = test_data[method](arg, localStorage.sessionId),
         promise = new Promise(fn);
 
-    promise.done(fn);
+    // debug message
+    if (debug) console.info("->", method, arg);
 
-    // optional caching
+    // configurable caching for the "load" method
     if (conf.cache && method == 'load') {
       if (cache[arg]) return promise.done(cache[arg])
       cache[arg] = ret;
@@ -192,15 +195,20 @@ function Backend(conf) {
 
     // session management
     if (ret.sessionId) localStorage.sessionId = ret.sessionId;
-    if (method == 'logout') localStorage.removeItem("sessionId")
+    else if (method == 'logout') localStorage.removeItem("sessionId");
 
+
+    // fake delay for the call
     setTimeout(function() {
+      if (debug) console.info("<-", ret);
+
       promise.always(ret);
       promise[ret === false ? 'fail' : 'done'](ret);
 
-      console.info("<-", ret);
-
     }, 400)
+
+    // given callback
+    promise.done(fn);
 
     return promise;
 
@@ -209,7 +217,8 @@ function Backend(conf) {
 }
 
 
-// Another good use case for observables
+// A generic promiese interface by using $.observable
+
 function Promise(fn) {
   var self = $.observable(this);
 
@@ -256,11 +265,11 @@ top.admin = $.observable(function(arg) {
 
 // Test data ("fixtures")
 
-function graph(mult) {
+function graph(multiplier) {
   var arr = [];
 
   for (var i = 0; i < 30; i++) {
-    arr[i] = Math.random() * mult * i;
+    arr[i] = Math.random() * multiplier * i;
   }
 
   return arr;
@@ -302,9 +311,9 @@ var test_data = {
   },
 
   // init
-  init: function(page, logged_in) {
+  init: function(page, sessionId) {
 
-    return !logged_in ? false : {
+    return !sessionId ? false : {
       user: {
         email: "joe@riotjs.com",
         name: "Joe Rebellous",
@@ -437,18 +446,19 @@ admin(function(app) {
     // clear existing data
     root.empty();
 
+    // add new ones
     $.each(view, function(i, entry) {
-      var val = entry.val;
-      if (!i) max = val;
+      if (!i) max = entry.val;
 
-      entry.width = Math.round(val / max * 100);
+      entry.width = Math.round(entry.val / max * 100);
 
-      root.append($.render(tmpl, entry))
-    })
+      root.append($.render(tmpl, entry));
 
-  })
+    });
 
-})
+  });
+
+});
 
 // login and logout
 
@@ -467,15 +477,15 @@ admin(function(app) {
 
     }).fail(function() {
       console.info("login failed");
-    })
+    });
 
-  })
+  });
 
   // logout
   $("#logout").click(function(e) {
     e.preventDefault();
     user.logout();
-  })
+  });
 
   function toggle(is_logged) {
     app.root.toggleClass("is-logged", is_logged).toggleClass("is-not-logged", !is_logged)
@@ -483,11 +493,11 @@ admin(function(app) {
 
   user.on("login logout", function(type) {
     toggle(type == 'login');
-  })
+  });
 
   toggle(!!user.username);
 
-})
+});
 
 // Search dropdown
 admin(function(app) {
@@ -513,16 +523,17 @@ admin(function(app) {
 
       $.each(arr, function(i, res) {
         results.append($.render(tmpl, res))
-      })
-    })
+      });
+
+    });
 
     $(document).one("click keypress", function() {
       results.hide();
-    })
+    });
 
-  })
+  });
 
-})
+});
 
 // Draw stats
 admin(function(app) {
@@ -533,23 +544,22 @@ admin(function(app) {
   app.on("load:stats", function(stats) {
 
     $.each(stats, function(i, data) {
-      canvas.eq(i).graph2(data, colors[i])
+      canvas.eq(i).graph2(data, colors[i]);
     });
 
-  })
+  });
 
-})
+});
 
 // Single user
 admin(function(app) {
 
   var root = $("#user"),
-    tmpl = $("#user-tmpl").html()
+    tmpl = $("#user-tmpl").html();
 
   app.on("load:user", function(data) {
-    console.info(data);
-    root.html($.render(tmpl, data))
-  })
+    root.html($.render(tmpl, data));
+  });
 
 });
 

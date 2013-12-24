@@ -23,13 +23,14 @@ admin(function(app) {
 
       $.each(arr, function(i, res) {
         results.append($.render(tmpl, res))
-      })
-    })
+      });
+
+    });
 
     $(document).one("click keypress", function() {
       results.hide();
-    })
+    });
 
-  })
+  });
 
-})
+});

@@ -16,7 +16,7 @@ navi{margin-left:2em;display:inline-block;width:58%}
 #login h3{font-family:"avenir next","helvetica neue";font-weight:100;font-size:250%;margin-bottom:.6em}
 canvas{width:800px;height:200px}
 main{position:relative}
-.page{position:absolute;top:0;left:0;opacity:0;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);-webkit-transition:opacity .2s;-moz-transition:opacity .2s;transition:opacity .2s;display:none;width:100%;}
+.page{position:absolute;top:0;left:0;opacity:0;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);-webkit-transition:opacity .1s;-moz-transition:opacity .1s;transition:opacity .1s;display:none;width:100%;}
 .page.is-active{opacity:1;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100)}
 .is-not-logged{background:url("../img/login.jpg");-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;text-align:center;}
 .is-not-logged #login{display:inline-block}
