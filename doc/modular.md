@@ -169,26 +169,22 @@ Look for the logic on the [customer listing](https://github.com/moot/riotjs-admi
 
 ### Routing
 
-Routing or view switching is a core feature in single-page application. It's one of the main things that defines a client-side framework. The demo application performs routing on the presenter layer as follows:
-
+The demo application performs routing on the presenter layer as follows:
 
 ~~~ javascript
-// All links that start with "#/" calls Riot's $.route(path) function
-$(document).on("click", "a[href^='#/']", function() {
-
-  // $.route changes URL, notifies listeners and deals with back button
+// 1. Links
+$("navi a").click(function() {
   $.route($(this).attr("href"));
-
 });
 
 
-// Call API method to load stuff from server each time the URL changes
+// 2. Routing (Mapping between URL and API method)
 $.route(function(path) {
   app.load(path.slice(2));
 });
 
 
-// Set "is-active" class name for the active page
+// 3. UI logic
 app.on("before:load", function() {
 
   // remove existing class
@@ -202,11 +198,17 @@ app.on("before:load", function() {
 });
 ~~~
 
-The above code assumes that your API has a generic `load` method to load new "pages" from the server. The returned `view` has a type parameter that we use to grab the correct section from the page and assign a CSS class "is-active" for it. The page switching animation is implemented with CSS transition.
+Here's how it works:
 
-The ability to load new data from the server is designed on the API. Here the `$.route` behaviour is just a thin layer above the API to deal with the back button. It's completely on the presenter layer. The API can focus on the business logic only unaware of the web layer.
+1. **Links**: Select links that perform view switching and the change of the URL.
 
-The change of URL via user clicks or back button is basically just an event thrown by the view. Just like a window scroll event. This kind or routing is a very generic and transparent and is easy to customize.
+2. **Routing**: Defines the API method to be called when URL changes. The demo application has only one, generic `load` method that takes a page name as the argument but you can have more complex mapping between URL's and methods.
+
+3. **UI logic**: Define what happens on the UI when the API method is called and data (or "page") is returned from the server. Here we assign an "is-active" CSS class name to do the animated page switch using CSS transitions.
+
+The API emits "before:load" and "load" events so the presenters can implement the page swithing logic inside event handlers. This way you can call the `load` API method from the console too and the UI behaves similarly as it would work by clicking the navigational links.
+
+Routing is one of the main things that defines a client-side framework. In Riot the `$.route` behaviour is just a thin layer above the API to deal with the back button. The API can focus on the business logic only unaware of the web layer. The routing on the presenter is completely transparent and each of the steps can be customized based on your application needs.
 
 The above code only handles the switch and the actual rendering of the returned view object is dealt by a different, view specific presenter.
 

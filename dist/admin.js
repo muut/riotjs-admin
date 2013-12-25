@@ -569,7 +569,7 @@ admin(function(app) {
   var klass = "is-active"
 
   // 1. select elements from the page to call $.route(path)
-  $(document).on("click", "a[href^='#/']", function() {
+  $("navi a").click(function() {
 
     var link = $(this);
 
