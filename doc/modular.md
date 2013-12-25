@@ -20,7 +20,9 @@ The "frameworkless" nature of Riot forces you to focus on designing the API inst
 ### 5. Demo application
 Riot.js comes with an example application that goes beyond a Todo MVC. It's an administration panel that is easy to continue with. Something useful. It's well documented and shows the basics of modular programming and API centered design.
 
-This documentation starts by outlining the core concepts in modular single page applications and slowly increases the amount of code samples. After the documentation you can have a look at the source code of the [demo application](https://github.com/moot/riotjs-admin) to get full understanding of modular client-side applications.
+This documentation outlines the core concepts in modular single page applications with code samples. After the documentation you can have a look at the source code of the [demo application](https://github.com/moot/riotjs-admin) to get full understanding of modular client-side applications.
+
+There is also a more detailed [Introduction to Riot](/blog/technology/riotjs-the-1kb-mvp-framework.html).
 
 
 ## Modular applications
@@ -70,7 +72,7 @@ Riot uses these terms to describe the big picture: Model, View and Presenter.
 
 MVP at it's heart aims to separate the application logic (Model) from the user interface (View). This separation is important because it simplifies your code and makes it more testable. The lack of this high level separation causes so called "spaghetti code" where business and UI logic is mixed together. This is the jQuery era before single page applications (SPA) started gaining popularity.
 
-In classic UI terminology Riot uses the the "passive view" branch of the MVP family.
+In classic UI terminology Riot uses the the *passive view* [(1)](#links) branch of the MVP family.
 
 > A Passive View handles reduces the behavior of the UI components to the absolute minimum by using a controller that not just handles responses to user events, but also does all the updating of the view.
 
@@ -158,7 +160,7 @@ Riot takes a strong position on not recommending logic inside the templates. The
 
 1. Logic inside HTML is hard or impossible to test
 
-1. Logicless templates are sometimes over a magnitude faster, especially on non- webkit browsers [(x)](#links)
+1. Logicless templates are sometimes over a magnitude faster, especially on non- webkit browsers [(2)](#links)
 
 1. In complex loops it's natural to leave the data calculation logic for JavaScript and keep the templates clean.
 
@@ -200,7 +202,7 @@ app.on("before:load", function() {
 });
 ~~~
 
-The above code assumes that your API has a generic `load` method to load new "pages" from the server. The returned `view` has a type parameter that we use to grab the correct node from the page and assign a CSS class "is-active" for it. The page switching animation is implemented with CSS transition.
+The above code assumes that your API has a generic `load` method to load new "pages" from the server. The returned `view` has a type parameter that we use to grab the correct section from the page and assign a CSS class "is-active" for it. The page switching animation is implemented with CSS transition.
 
 The ability to load new data from the server is designed on the API. Here the `$.route` behaviour is just a thin layer above the API to deal with the back button. It's completely on the presenter layer. The API can focus on the business logic only unaware of the web layer.
 
@@ -213,7 +215,7 @@ The above code only handles the switch and the actual rendering of the returned 
 
 jQuery exists because the vanilla DOM is a complete disaster to work with. jQuery does a massive cleanup by exposing the DOM for the page developer in an elegant and friendly way.
 
-There are other implementations [(x)](#links) too, but the real credits go to John Resig. He designed the API, which has become a standarad to set a target for other implementation.
+There are other implementations [(3)](#links) too, but the real credits go to John Resig. He designed the API, which has become a standarad to set a target for other implementation.
 
 Feel free to use any of the implementations but the advantages of using jQuery itself are following
 
@@ -221,7 +223,7 @@ Feel free to use any of the implementations but the advantages of using jQuery i
 - biggest test suite, most reliable
 - already present on a website, possibly cached from a CDN
 
-jQuery is currently found on 56% of all websites and 92.0% of all the websites whose JavaScript library is known [(x)](#links).
+jQuery is currently found on 58% of all websites and 93.0% of all the websites whose JavaScript library is known [(4)](#links). These numbers are growing all the time.
 
 jQuery API is a perfect match for Riot. It's an ultimate tool for building presenters. The jQuery selectors provide a light way to bind the model to the view. And there can be multiple presenters dealing with the same set of HTML elements withtout them being aware of each other. It doesn't break modularity.
 
@@ -379,7 +381,21 @@ There is an unfortunate tendency to build unnecessary boilerplate around simple 
 I'd like to see something like Gist but with better discoverability (search, tags etc). A big mass of reusable functions that you can paste to your own project, perhaps modifying them a bit to your needs.
 
 
+## Conclusion
 
-- [MVP passive view](http://martinfowler.com/eaaDev/PassiveScreen.html)
+Riot applications are minimal in size and in terms of new concepts. The architecture is structured with vanilla JavaScript and jQuery without framework specific idioms. The business logic is completely separated and it has a nice API. All the functionality around the api is on isolated modules that can be developed independently. The API can be run and tested on the server side. And the application is fast because of the logicless templating.
+
+All the above concepts are applied on a well documented [demo application](https://github.com/moot/riotjs-admin). It's an administration panel that you can use as a starting point.
+
+This documentation is an ongoing process. There are going to be large new sections about testing and building.
 
 
+## Links
+
+[1] [MVP passive view](http://martinfowler.com/eaaDev/PassiveScreen.html)
+
+[2] [Riot templating is Fast](/blog/technology/riotjs-the-1kb-mvp-framework.html#fast)
+
+[3] jQuery API implementations: [Zepto](http://zeptojs.com/), [Minified.js](http://minifiedjs.com/)
+
+[4] [Usage statistics and market share of JQuery for websites](http://w3techs.com/technologies/details/js-jquery/all/all)

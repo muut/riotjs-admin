@@ -1,15 +1,17 @@
 #!/usr/bin/env node
 
-require('shelljs/make');
-
 // grunt is messy, shelljs is great
+
+require('shelljs/make');
 
 var gaze = require('gaze'),
     stylus = require('stylus');
 
+
+// Make a single file out of everything
 function concat() {
 
-  // Riot
+  // riot.js
   var js = cat("../riotjs/riot.js")
 
   // api
@@ -23,6 +25,7 @@ function concat() {
 
 }
 
+// Compile stylus file
 function styl(source, target) {
   var dir = source.split("/").slice(0, -1).join("/");
 
@@ -33,8 +36,10 @@ function styl(source, target) {
 
 }
 
+// ./make.js concat
 target.concat = concat;
 
+// ./make.js watch
 target.watch = function() {
 
   gaze("src/**/*.js", function() {
