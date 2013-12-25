@@ -2,11 +2,21 @@
 // Handle (animated) view switching, aka. routing
 admin(function(app) {
 
+  var klass = "is-active"
+
   // 1. select elements from the page to call $.route(path)
   $(document).on("click", "a[href^='#/']", function() {
 
+    var link = $(this);
+
+    // no action
+    if (link.hasClass(klass)) return;
+
+    // loading indicator
+    link.addClass("is-loading");
+
     // Riot changes the URL, notifies listeners and takes care of the back button
-    $.route($(this).attr("href"));
+    $.route(link.attr("href"));
 
   });
 
@@ -20,15 +30,18 @@ admin(function(app) {
   });
 
   // 3. Set "is-active" class name for the active page
-  app.on("before:load", function() {
+  app.on("before:load", function(type) {
 
     // remove existing class
-    $(".page.is-active").removeClass("is-active");
+    $("." + klass).removeClass(klass);
 
   }).on("load", function(view) {
 
-    // set a new one
-    $("#" + view.type + "-page").addClass("is-active");
+    // set a new class
+    $("#" + view.type + "-page").add("#" + view.type + "-nav").addClass(klass);
+
+    // remove loading indicator
+    $("navi .is-loading").removeClass("is-loading");
 
   });
 

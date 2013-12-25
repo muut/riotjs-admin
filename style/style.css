@@ -6,7 +6,9 @@ a:hover{text-decoration:underline}
 input{border:1px solid #ccc;padding:.6em;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;font-size:100%}
 header{background-color:#333;padding:.6em;margin-bottom:1.2em;color:#eee;text-transform:uppercase;letter-spacing:2px;font-size:110%;display:none}
 header div,main{max-width:800px;margin:0 auto}
-header a{font-size:80%;margin-left:1em;color:#eee}
+header a{font-size:80%;margin-left:1em;color:#eee;-webkit-transition:color .1s;-moz-transition:color .1s;transition:color .1s;}
+header a.is-loading{color:#555}
+header a.is-active{color:#999;text-decoration:none;cursor:default}
 navi{margin-left:2em;display:inline-block;width:58%}
 #login{padding:2em;background-color:rgba(0,0,0,0.3);color:#eee;margin:15% auto;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;display:none;}
 #login label{display:block;margin-bottom:1.2em;font-weight:100;color:#777;text-align:left}
