@@ -30,11 +30,11 @@ main{position:relative}
 #bars a{width:18%;white-space:no-wrap;padding-right:.6em}
 #bars .bar{width:80%}
 #bars span{height:7px;background-color:#ccc;display:block;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px}
-#user{margin-top:1.2em;}
-#user img{margin-right:1.2em;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px}
-#user div{display:inline-block;max-width:530px;vertical-align:top}
-#user h1{margin-bottom:.3em;color:#1fadc5;font-weight:normal}
-#user .desc{color:#777;font-size:120%;line-height:1.2}
+#user-page{margin-top:1.2em;}
+#user-page img{margin-right:1.2em;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px}
+#user-page div{display:inline-block;max-width:530px;vertical-align:top}
+#user-page h1{margin-bottom:.3em;color:#1fadc5;font-weight:normal}
+#user-page .desc{color:#777;font-size:120%;line-height:1.2}
 #search{display:inline-block;position:relative;}
 #search input{padding:.2em 1em;-webkit-border-radius:3em;-moz-border-radius:3em;border-radius:3em;font-size:90%;background-color:#ddd;-webkit-transition:background-color .4s;-moz-transition:background-color .4s;transition:background-color .4s;}
 #search input:focus{outline:none;background-color:#fff}

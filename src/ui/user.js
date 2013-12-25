@@ -2,7 +2,7 @@
 // Single user
 admin(function(app) {
 
-  var root = $("#user"),
+  var root = $("#user-page"),
     tmpl = $("#user-tmpl").html();
 
   app.on("load:user", function(data) {
