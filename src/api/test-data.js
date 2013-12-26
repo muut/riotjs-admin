@@ -60,7 +60,11 @@ function user(id) {
   return {
     id: 809,
     img: 'img/tipiirai.jpg',
-    name: 'Tero Piirainen',
+    username: 'dominique2',
+    name: 'Dominque Larocca',
+    email: 'dominique@moot.it',
+    joined: +new Date - 100000,
+
     desc: 'Elit hoodie pickled, literally church-key whatever High Life skateboard \
       tofu actually reprehenderit. Id slow-carb asymmetrical accusamus \
       Portland, flannel tempor proident odio esse quis.'
