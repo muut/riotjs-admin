@@ -3,7 +3,7 @@
 admin(function(app) {
 
   var canvas = $("canvas", app.root),
-    colors = ['#be0000', '#4cbe00', '#1fadc5'];
+      colors = ['#be0000', '#4cbe00', '#1fadc5'];
 
   app.on("load:stats", function(stats) {
 

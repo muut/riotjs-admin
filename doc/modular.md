@@ -18,9 +18,7 @@ The purpose of Riot is to build modular applications that are easy to manage and
 The "frameworkless" nature of Riot forces you to focus on designing the API instead of building things around a certain framework. Your precious business logic is pure JavaScript that runs on server too.
 
 ### 5. Demo application
-Riot.js comes with an example application that goes beyond a Todo MVC. It's an administration panel that is easy to continue with. Something useful. It's well documented and shows the basics of modular programming and API centered design.
-
-This documentation outlines the core concepts in modular single page applications with code samples. After the documentation you can have a look at the source code of the [demo application](https://github.com/moot/riotjs-admin) to get full understanding of modular client-side applications.
+Riot.js comes with an [demo application](https://github.com/moot/riotjs-admin) that goes beyond a Todo MVC. It's a useful administration panel that is easy to continue with. It's well documented and shows the basics of modular programming and API oriented design.
 
 There is also a more detailed [Introduction to Riot](/blog/technology/riotjs-the-1kb-mvp-framework.html).
 
@@ -78,7 +76,7 @@ In classic UI terminology Riot uses the the *passive view* [(1)](#links) branch 
 
 Unlike most MVC-style configurations, Passive View results in no dependencies between view and model. It's a simple pattern and easy to understand – which makes you powerful.
 
-Lastly, it's important to realize that MVP (or MVC) is not a framework. It's a high level design pattern. It's purpose is to simplify the architecture of UI heavy applications. A way to structure your code. In loosely coupled application the modules communicate with each other with events.
+Lastly, it's important to realize that MVP (or MVC) is not a framework. It's a high level design pattern. It's purpose is to simplify the architecture of UI heavy applications. Just a way to structure your code. In loosely coupled application the modules communicate with each other with events.
 
 Most of the current frameworks are an overkill since basically all you need is a proper event system.
 
@@ -385,11 +383,11 @@ I'd like to see something like Gist but with better discoverability (search, tag
 
 ## Conclusion
 
-Riot applications are minimal in size and in terms of new concepts. The architecture is structured with vanilla JavaScript and jQuery without framework specific idioms. The business logic is completely separated and it has a nice API. All the functionality around the api is on isolated modules that can be developed independently. The API can be run and tested on the server side. And the application is fast because of the logicless templating.
+Riot applications are small and the library has only 3 methods to master. The architecture is structured with vanilla JavaScript and jQuery without framework specific idioms. The business logic is completely separated and it has a nice API. All the functionality around the API is on isolated modules that can be developed independently. The API can be run and tested on the server side. And the application is fast because of the logicless templating.
 
 All the above concepts are applied on a well documented [demo application](https://github.com/moot/riotjs-admin). It's an administration panel that you can use as a starting point.
 
-This documentation is an ongoing process. There are going to be large new sections about testing and building.
+This documentation is an ongoing process. The upcoming documentation will center more closely in testing, building and deploying.
 
 
 ## Links

@@ -14,7 +14,7 @@ This is a demo single-page application made with Riot.js. It's a generic skeleto
 
 ### Modular architecture
 - one global variable `admin` to build modules
-- modules can be included in no specific order(ui\/*.js, api\/*.js)
+- modules can be included in no specific order (*.js)
 - each can be renamed/removed/modified on without breaking the app
 - backend agnostic
 - maintainable / good for multiple developers

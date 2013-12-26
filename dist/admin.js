@@ -265,6 +265,73 @@ top.admin = $.observable(function(arg) {
 
 // Test data ("fixtures")
 
+function customers() {
+  var arr = [
+    'Acme, inc.',
+    'Widget Corp',
+    '123 Warehousing',
+    'Demo Company',
+    'Smith and Co.',
+    'Foo Bars',
+    'ABC Telecom',
+    'Fake Brothers',
+    'QWERTY Logistics',
+    'Demo, inc.',
+    'Sample Company',
+    'Sample, inc',
+    'Acme Corp',
+    'Allied Biscuit',
+    'Ankh-Sto Associates',
+    'Extensive Enterprise',
+    'Galaxy Corp',
+    'Globo-Chem',
+    'Mr. Sparkle',
+    'Globex Corporation',
+    'LexCorp',
+    'LuthorCorp',
+    'Praxis Corporation',
+    'Sombra Corporation',
+    'Sto Plains Holdings'
+  ];
+
+  return $.map(arr, function(name, i) {
+    return { name: name, id: i * 3, val: 100 - (i * 4) + (5 * Math.random()) };
+  });
+
+}
+
+function search(query) {
+  var arr = [
+    'Cheryll Egli',
+    'Dominque Larocca',
+    'Judie Flaugher',
+    'Leonard Fason',
+    'Lia Monteith',
+    'Lindsy Woolard',
+    'Rosanna Broadhead',
+    'Sharyl Finlayson',
+    'Spencer Zeller',
+    'Zelda Fazenbaker'
+  ];
+
+  return $.map(arr, function(name, i) {
+    return { name: name, id: i * 3, img: 'img/tipiirai.jpg' };
+  });
+
+}
+
+function user(id) {
+  return {
+    id: 809,
+    img: 'img/tipiirai.jpg',
+    name: 'Tero Piirainen',
+    desc: 'Elit hoodie pickled, literally church-key whatever High Life skateboard \
+      tofu actually reprehenderit. Id slow-carb asymmetrical accusamus \
+      Portland, flannel tempor proident odio esse quis.'
+  };
+
+}
+
 function graph(multiplier) {
   var arr = [];
 
@@ -275,22 +342,6 @@ function graph(multiplier) {
   return arr;
 }
 
-function customers() {
-  return [
-    { id: 34, img: 'img/tipiirai.jpg', name: 'Machinery', val: 398 },
-    { id: 60, img: 'img/tipiirai.jpg', name: 'Big Robots', val: 318 },
-    { id: 89, img: 'img/tipiirai.jpg', name: 'Monsterous', val: 267 }
-  ];
-}
-
-function user(id) {
-  return {
-    id: 809,
-    img: 'img/tipiirai.jpg',
-    name: 'Tero Piirainen',
-    desc: 'Elit hoodie pickled, literally church-key whatever High Life skateboard tofu actually reprehenderit. Id slow-carb asymmetrical accusamus Portland, flannel tempor proident odio esse quis.'
-  }
-}
 
 var test_data = {
 
@@ -325,9 +376,7 @@ var test_data = {
 
   },
 
-  search: function(query) {
-    return customers();
-  },
+  search: search,
 
   login: function(params) {
     return test_data.init(params.page, params.username == 'riot')
@@ -522,7 +571,7 @@ admin(function(app) {
       results.empty().show();
 
       $.each(arr, function(i, res) {
-        results.append($.render(tmpl, res))
+        results.append($.render(tmpl, res));
       });
 
     });
@@ -539,7 +588,7 @@ admin(function(app) {
 admin(function(app) {
 
   var canvas = $("canvas", app.root),
-    colors = ['#be0000', '#4cbe00', '#1fadc5'];
+      colors = ['#be0000', '#4cbe00', '#1fadc5'];
 
   app.on("load:stats", function(stats) {
 
@@ -555,7 +604,7 @@ admin(function(app) {
 admin(function(app) {
 
   var root = $("#user-page"),
-    tmpl = $("#user-tmpl").html();
+      tmpl = $("#user-tmpl").html();
 
   app.on("load:user", function(data) {
     root.html($.render(tmpl, data));

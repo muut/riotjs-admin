@@ -10,9 +10,9 @@ pink              = #ff57a8
 
 
 // size units
-u = 0.6em
-u2 = 1.2em
-uh = 0.3em
+u   = 0.6em
+u2  = 1.2em
+uh  = 0.3em
 
 // quick reset
 *
@@ -24,7 +24,6 @@ uh = 0.3em
 
 body
   font-family "Myriad Pro", "Lucida Grande", "Lucida Sans Unicode"
-
 
 
 template
@@ -119,9 +118,16 @@ navi
     margin-bottom u
 
 // view visibility
-canvas
-  width 800px
-  height 200px
+#stats-page
+  h3
+    font-weight normal
+    font-size 100%
+    margin 0 0 -1.1em 3em
+
+  canvas
+    width 800px
+    height 200px
+    margin-bottom 25px
 
 main
   position relative
@@ -134,9 +140,11 @@ main
   transition opacity .1s
   display none
   width 100%
+  z-index -1
 
   &.is-active
     opacity 1
+    z-index 1
 
 .is-not-logged
   background url(../img/login.jpg)
@@ -158,25 +166,31 @@ main
 
 // bars
 #bars
-  div
-    padding uh 0
+  a
+    display block
+    padding uh
+
     > *
       display inline-block
-      vertical-align top
+      vertical-align middle
 
-  a
+    &:hover
+      background-color #e
+
+  em
     width 18%
-    white-space no-wrap
+    white-space nowrap
     padding-right u
-
-  .bar
-    width 80%
+    font-size 90%
 
   span
-    height 7px
-    background-color #c
+    width 80%
+
+  strong
+    height 4px
+    background-color #7
     display block
-    border-radius 2px
+    border-radius 4px
 
 
 #user-page
@@ -229,7 +243,6 @@ main
   width 100%
   box-shadow 0 0 6px #c
   border-radius 4px
-  padding .5em
   display none
   z-index 9
 
@@ -239,7 +252,7 @@ main
     text-transform none
     letter-spacing 0
     display block
-    margin-bottom .5em
+    margin .5em
     text-decoration none
 
     &:hover

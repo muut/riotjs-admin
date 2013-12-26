@@ -9,10 +9,12 @@
   </head>
 
   <template id="bars-tmpl">
-    <div>
-      <a href="#/account/{id}">{name}</a>
-      <div class="bar"><span style="width: {width}%"></span></div>
-    </div>
+    <a href="#/customer/{id}">
+      <em>{name}</em>
+      <span>
+        <strong style="width: {width}%"></strong>
+      </span>
+    </a>
   </template>
 
   <template id="result-tmpl">
@@ -81,7 +83,7 @@
         <div id="bars"></div>
       </div>
 
-      <!-- user -->
+      <!-- search -> user -->
       <div class="page" id="user-page"></div>
 
     </main>
