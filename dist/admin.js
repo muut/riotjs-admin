@@ -265,74 +265,83 @@ top.admin = $.observable(function(arg) {
 
 // Test data ("fixtures")
 
-function customers() {
-  var arr = [
-    'Acme, inc.',
-    'Widget Corp',
-    '123 Warehousing',
-    'Demo Company',
-    'Smith and Co.',
-    'Foo Bars',
-    'ABC Telecom',
-    'Fake Brothers',
-    'QWERTY Logistics',
-    'Demo, inc.',
-    'Sample Company',
-    'Sample, inc',
-    'Acme Corp',
-    'Allied Biscuit',
-    'Ankh-Sto Associates',
-    'Extensive Enterprise',
-    'Galaxy Corp',
-    'Globo-Chem',
-    'Mr. Sparkle',
-    'Globex Corporation',
-    'LexCorp',
-    'LuthorCorp',
-    'Praxis Corporation',
-    'Sombra Corporation',
-    'Sto Plains Holdings'
-  ];
+var customers = $.map([
+  'Acme, inc.',
+  'Widget Corp',
+  '123 Warehousing',
+  'Demo Company',
+  'Smith and Co.',
+  'Foo Bars',
+  'ABC Telecom',
+  'Fake Brothers',
+  'QWERTY Logistics',
+  'Demo, inc.',
+  'Sample Company',
+  'Sample, inc',
+  'Acme Corp',
+  'Allied Biscuit',
+  'Ankh-Sto Associates',
+  'Extensive Enterprise',
+  'Galaxy Corp',
+  'Globo-Chem',
+  'Mr. Sparkle',
+  'Globex Corporation',
+  'LexCorp',
+  'LuthorCorp',
+  'Praxis Corporation',
+  'Sombra Corporation',
+  'Sto Plains Holdings'
 
-  return $.map(arr, function(name, i) {
-    return { name: name, id: i * 3, val: 100 - (i * 4) + (5 * Math.random()) };
+], function(name, i) {
+  return { name: name, id: i + 1, val: 100 - (i * 4) + (5 * Math.random()) };
+
+});
+
+function customer(id) {
+  return $.extend(customers[id - 1], {
+    img: 'img/tipiirai.jpg',
+    email: 'demo@company.it',
+    joined: +new Date - 100000,
+
+    desc: 'Elit hoodie pickled, literally church-key whatever High Life skateboard \
+      tofu actually reprehenderit. Id slow-carb asymmetrical accusamus \
+      Portland, flannel tempor proident odio esse quis.',
+
+    invoices: [
+
+    ]
   });
 
 }
 
-function search(query) {
-  var arr = [
-    'Cheryll Egli',
-    'Dominque Larocca',
-    'Judie Flaugher',
-    'Leonard Fason',
-    'Lia Monteith',
-    'Lindsy Woolard',
-    'Rosanna Broadhead',
-    'Sharyl Finlayson',
-    'Spencer Zeller',
-    'Zelda Fazenbaker'
-  ];
+var users = $.map([
+  'Cheryll Egli',
+  'Dominque Larocca',
+  'Judie Flaugher',
+  'Leonard Fason',
+  'Lia Monteith',
+  'Lindsy Woolard',
+  'Rosanna Broadhead',
+  'Sharyl Finlayson',
+  'Spencer Zeller',
+  'Zelda Fazenbaker'
 
-  return $.map(arr, function(name, i) {
-    return { name: name, id: i * 3, img: 'img/tipiirai.jpg' };
-  });
+], function(name, i) {
+  return { name: name, id: i + 1, img: 'img/tipiirai.jpg' };
 
-}
+});
 
 function user(id) {
-  return {
-    id: 809,
-    img: 'img/tipiirai.jpg',
+
+  return $.extend(users[id - 1], {
     username: 'dominique2',
-    name: 'Dominque Larocca',
-    email: 'dominique@moot.it',
+    email: 'demo.user@riotjs.com',
     joined: +new Date - 100000,
 
     desc: 'Elit hoodie pickled, literally church-key whatever High Life skateboard \
       tofu actually reprehenderit. Id slow-carb asymmetrical accusamus \
       Portland, flannel tempor proident odio esse quis.'
-  };
+  });
 
 }
 
@@ -359,7 +368,8 @@ var test_data = {
       path: path,
       type: page || "stats",
       data: page == "stats" ? [ graph(100), graph(100), graph(200) ] :
-            page == "customers" ? customers() :
+            page == "customers" ? customers :
+            page == "customer" ? customer(els[1]) :
             page == "user" ? user(els[1]) : []
     }
 
@@ -380,7 +390,9 @@ var test_data = {
 
   },
 
-  search: search,
+  search: function(query) {
+    return users;
+  },
 
   login: function(params) {
     return test_data.init(params.page, params.username == 'riot')
@@ -486,6 +498,19 @@ $.fn.graph2 = function(data, color) {
 
 
 
+// Single user
+admin(function(app) {
+
+  var root = $("#customer-page"),
+      tmpl = $("#customer-tmpl").html();
+
+  app.on("load:customer", function(data) {
+    root.html($.render(tmpl, data));
+
+  });
+
+});
+
 // List of customers
 admin(function(app) {
 
@@ -517,11 +542,14 @@ admin(function(app) {
 
 admin(function(app) {
 
-  var user = app.user;
+  var user = app.user,
+      loading = "is-loading";
 
   // login
   $("#login").submit(function(e) {
     e.preventDefault();
+
+    var el = $(this).addClass("is-loading");
 
     user.login({
       username: this.username.value,
@@ -530,14 +558,23 @@ admin(function(app) {
 
     }).fail(function() {
       console.info("login failed");
-    });
+
+    }).done(function() {
+      el.removeClass("is-loading");
+
+    })
 
   });
 
   // logout
   $("#logout").click(function(e) {
     e.preventDefault();
-    user.logout();
+    var el = $(this).addClass("is-loading");
+
+    user.logout(function() {
+      el.removeClass("is-loading");
+    });
+
   });
 
   function toggle(is_logged) {
@@ -610,7 +647,6 @@ admin(function(app) {
   var root = $("#user-page"),
       tmpl = $("#user-tmpl").html();
 
-
   // date formatting goes to presenter layer, not inside model
   function formatTime(time) {
 
@@ -621,6 +657,12 @@ admin(function(app) {
   app.on("load:user", function(data) {
     data.joined = formatTime(data.joined);
     root.html($.render(tmpl, data));
+
+
+    $("button", root).click(function() {
+      $(this).text("User is banned!");
+    })
+
   });
 
 });

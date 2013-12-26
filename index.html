@@ -34,6 +34,21 @@
       </p>
 
       <p class="desc">{desc}</p>
+
+      <button>Ban user</button>
+    </div>
+  </template>
+
+  <template id="customer-tmpl">
+    <img src="{img}">
+    <div>
+      <h1>{name}</h1>
+      <p class="meta">
+        {email} <span>&bull;</span>
+        {joined}
+      </p>
+
+      <p class="desc">{desc}</p>
     </div>
   </template>
 
@@ -88,6 +103,9 @@
       <div class="page" id="customers-page">
         <div id="bars"></div>
       </div>
+
+      <!-- customer -->
+      <div class="page" id="customer-page"></div>
 
       <!-- search -> user -->
       <div class="page" id="user-page"></div>

@@ -3,11 +3,14 @@
 
 admin(function(app) {
 
-  var user = app.user;
+  var user = app.user,
+      loading = "is-loading";
 
   // login
   $("#login").submit(function(e) {
     e.preventDefault();
+
+    var el = $(this).addClass("is-loading");
 
     user.login({
       username: this.username.value,
@@ -16,14 +19,23 @@ admin(function(app) {
 
     }).fail(function() {
       console.info("login failed");
-    });
+
+    }).done(function() {
+      el.removeClass("is-loading");
+
+    })
 
   });
 
   // logout
   $("#logout").click(function(e) {
     e.preventDefault();
-    user.logout();
+    var el = $(this).addClass("is-loading");
+
+    user.logout(function() {
+      el.removeClass("is-loading");
+    });
+
   });
 
   function toggle(is_logged) {

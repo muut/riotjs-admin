@@ -1,74 +1,83 @@
 
 // Test data ("fixtures")
 
-function customers() {
-  var arr = [
-    'Acme, inc.',
-    'Widget Corp',
-    '123 Warehousing',
-    'Demo Company',
-    'Smith and Co.',
-    'Foo Bars',
-    'ABC Telecom',
-    'Fake Brothers',
-    'QWERTY Logistics',
-    'Demo, inc.',
-    'Sample Company',
-    'Sample, inc',
-    'Acme Corp',
-    'Allied Biscuit',
-    'Ankh-Sto Associates',
-    'Extensive Enterprise',
-    'Galaxy Corp',
-    'Globo-Chem',
-    'Mr. Sparkle',
-    'Globex Corporation',
-    'LexCorp',
-    'LuthorCorp',
-    'Praxis Corporation',
-    'Sombra Corporation',
-    'Sto Plains Holdings'
-  ];
+var customers = $.map([
+  'Acme, inc.',
+  'Widget Corp',
+  '123 Warehousing',
+  'Demo Company',
+  'Smith and Co.',
+  'Foo Bars',
+  'ABC Telecom',
+  'Fake Brothers',
+  'QWERTY Logistics',
+  'Demo, inc.',
+  'Sample Company',
+  'Sample, inc',
+  'Acme Corp',
+  'Allied Biscuit',
+  'Ankh-Sto Associates',
+  'Extensive Enterprise',
+  'Galaxy Corp',
+  'Globo-Chem',
+  'Mr. Sparkle',
+  'Globex Corporation',
+  'LexCorp',
+  'LuthorCorp',
+  'Praxis Corporation',
+  'Sombra Corporation',
+  'Sto Plains Holdings'
 
-  return $.map(arr, function(name, i) {
-    return { name: name, id: i * 3, val: 100 - (i * 4) + (5 * Math.random()) };
+], function(name, i) {
+  return { name: name, id: i + 1, val: 100 - (i * 4) + (5 * Math.random()) };
+
+});
+
+function customer(id) {
+  return $.extend(customers[id - 1], {
+    img: 'img/tipiirai.jpg',
+    email: 'demo@company.it',
+    joined: +new Date - 100000,
+
+    desc: 'Elit hoodie pickled, literally church-key whatever High Life skateboard \
+      tofu actually reprehenderit. Id slow-carb asymmetrical accusamus \
+      Portland, flannel tempor proident odio esse quis.',
+
+    invoices: [
+
+    ]
   });
 
 }
 
-function search(query) {
-  var arr = [
-    'Cheryll Egli',
-    'Dominque Larocca',
-    'Judie Flaugher',
-    'Leonard Fason',
-    'Lia Monteith',
-    'Lindsy Woolard',
-    'Rosanna Broadhead',
-    'Sharyl Finlayson',
-    'Spencer Zeller',
-    'Zelda Fazenbaker'
-  ];
+var users = $.map([
+  'Cheryll Egli',
+  'Dominque Larocca',
+  'Judie Flaugher',
+  'Leonard Fason',
+  'Lia Monteith',
+  'Lindsy Woolard',
+  'Rosanna Broadhead',
+  'Sharyl Finlayson',
+  'Spencer Zeller',
+  'Zelda Fazenbaker'
 
-  return $.map(arr, function(name, i) {
-    return { name: name, id: i * 3, img: 'img/tipiirai.jpg' };
-  });
+], function(name, i) {
+  return { name: name, id: i + 1, img: 'img/tipiirai.jpg' };
 
-}
+});
 
 function user(id) {
-  return {
-    id: 809,
-    img: 'img/tipiirai.jpg',
+
+  return $.extend(users[id - 1], {
     username: 'dominique2',
-    name: 'Dominque Larocca',
-    email: 'dominique@moot.it',
+    email: 'demo.user@riotjs.com',
     joined: +new Date - 100000,
 
     desc: 'Elit hoodie pickled, literally church-key whatever High Life skateboard \
       tofu actually reprehenderit. Id slow-carb asymmetrical accusamus \
       Portland, flannel tempor proident odio esse quis.'
-  };
+  });
 
 }
 
@@ -95,7 +104,8 @@ var test_data = {
       path: path,
       type: page || "stats",
       data: page == "stats" ? [ graph(100), graph(100), graph(200) ] :
-            page == "customers" ? customers() :
+            page == "customers" ? customers :
+            page == "customer" ? customer(els[1]) :
             page == "user" ? user(els[1]) : []
     }
 
@@ -116,7 +126,9 @@ var test_data = {
 
   },
 
-  search: search,
+  search: function(query) {
+    return users;
+  },
 
   login: function(params) {
     return test_data.init(params.page, params.username == 'riot')

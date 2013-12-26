@@ -43,6 +43,22 @@ input
   border-radius 3px
   font-size 100%
 
+button
+  padding uh u2
+  background-color blue
+  color #f
+  font-size 100%
+  cursor pointer
+  border-radius 5em
+  outline 0
+
+  &:hover
+    background-color darken(blue, 5)
+
+  &:active
+    background-color darken(blue, 15)
+
+
 header
   background-color #3
   padding u
@@ -85,6 +101,7 @@ navi
   margin 15% auto
   border-radius 4px
   display none
+  transition opacity .3s
 
   label
     display block
@@ -92,6 +109,11 @@ navi
     font-weight 100
     color #7
     text-align left
+
+  button
+    width 60%
+    font-size 110%
+    padding u 0
 
   input
     width 100%
@@ -102,20 +124,14 @@ navi
     &:focus
       background-color #f
 
-  button
-    width 60%
-    padding u 0
-    background-color blue
-    color #f
-    font-size 110%
-    cursor pointer
-    border-radius 5em
-
   h3
     font-family "avenir next", "helvetica neue"
     font-weight 100
     font-size 250%
     margin-bottom u
+
+  &.is-loading
+    opacity .5
 
 // view visibility
 #stats-page
@@ -223,6 +239,7 @@ main
     color #5
     font-size 120%
     line-height 1.2
+    margin-bottom u2
 
 // search
 #search
@@ -230,11 +247,12 @@ main
   position relative
 
   input
-    padding .2em 1em
+    padding .3em 1em
     border-radius 3em
-    font-size 90%
-    background-color #d
+    font-size 85%
+    background-color #6
     transition background-color .4s
+    border-color #6
 
     &:focus
       outline none

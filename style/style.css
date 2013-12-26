@@ -4,18 +4,22 @@ template{display:none}
 a{color:#1fadc5;text-decoration:none;cursor:pointer;}
 a:hover{text-decoration:underline}
 input{border:1px solid #ccc;padding:.6em;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;font-size:100%}
+button{padding:.3em 1.2em;background-color:#1fadc5;color:#fff;font-size:100%;cursor:pointer;-webkit-border-radius:5em;-moz-border-radius:5em;border-radius:5em;outline:0;}
+button:hover{background-color:#1c9aaf}
+button:active{background-color:#157383}
 header{background-color:#333;padding:.6em;margin-bottom:1.2em;color:#eee;text-transform:uppercase;letter-spacing:2px;font-size:110%;display:none}
 header div,main{max-width:800px;margin:0 auto}
 header a{font-size:80%;margin-left:1em;color:#eee;-webkit-transition:color .1s;-moz-transition:color .1s;transition:color .1s;}
 header a.is-loading{color:#555}
 header a.is-active{color:#999;text-decoration:none;cursor:default}
 navi{margin-left:2em;display:inline-block;width:58%}
-#login{padding:2em;background-color:rgba(0,0,0,0.3);color:#eee;margin:15% auto;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;display:none;}
+#login{padding:2em;background-color:rgba(0,0,0,0.3);color:#eee;margin:15% auto;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;display:none;-webkit-transition:opacity .3s;-moz-transition:opacity .3s;transition:opacity .3s;}
 #login label{display:block;margin-bottom:1.2em;font-weight:100;color:#777;text-align:left}
+#login button{width:60%;font-size:110%;padding:.6em 0}
 #login input{width:100%;border:none;background-color:rgba(255,255,255,0.5);box-shadow:0 0 5px #444 inset;}
 #login input:focus{background-color:#fff}
-#login button{width:60%;padding:.6em 0;background-color:#1fadc5;color:#fff;font-size:110%;cursor:pointer;-webkit-border-radius:5em;-moz-border-radius:5em;border-radius:5em}
 #login h3{font-family:"avenir next","helvetica neue";font-weight:100;font-size:250%;margin-bottom:.6em}
+#login.is-loading{opacity:.5;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50)}
 #stats-page h3{font-weight:normal;font-size:100%;margin:0 0 -1.1em 3em}
 #stats-page canvas{width:800px;height:200px;margin-bottom:25px}
 main{position:relative}
@@ -38,9 +42,9 @@ main{position:relative}
 #user-page h1{font-weight:normal}
 #user-page .meta{margin-bottom:.6em;color:#777;margin:.3em 0 .6em;}
 #user-page .meta span{margin:0 .3em;color:#ccc}
-#user-page .desc{color:#555;font-size:120%;line-height:1.2}
+#user-page .desc{color:#555;font-size:120%;line-height:1.2;margin-bottom:1.2em}
 #search{display:inline-block;position:relative;}
-#search input{padding:.2em 1em;-webkit-border-radius:3em;-moz-border-radius:3em;border-radius:3em;font-size:90%;background-color:#ddd;-webkit-transition:background-color .4s;-moz-transition:background-color .4s;transition:background-color .4s;}
+#search input{padding:.3em 1em;-webkit-border-radius:3em;-moz-border-radius:3em;border-radius:3em;font-size:85%;background-color:#666;-webkit-transition:background-color .4s;-moz-transition:background-color .4s;transition:background-color .4s;border-color:#666;}
 #search input:focus{outline:none;background-color:#fff}
 #search.is-loading{opacity:.5;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50);-webkit-transition:opacity .2s;-moz-transition:opacity .2s;transition:opacity .2s}
 #results{position:absolute;top:110%;left:0;background-color:#fff;width:100%;box-shadow:0 0 6px #ccc;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;display:none;z-index:9;}
