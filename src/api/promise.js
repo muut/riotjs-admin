@@ -4,7 +4,7 @@
 function Promise(fn) {
   var self = $.observable(this);
 
-  $.each(['done', 'fail', 'always'], function(i, name) {
+  $.map(['done', 'fail', 'always'], function(name) {
     self[name] = function(arg) {
       return self[$.isFunction(arg) ? 'on' : 'trigger'](name, arg);
     };

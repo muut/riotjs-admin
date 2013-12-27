@@ -4,12 +4,14 @@ function Backend(conf) {
 
   var self = this,
     cache = {},
+    storage = top.localStorage || { sessionId: conf.sessionId },
     debug = conf.debug && typeof console != 'undefined';
 
-  //
+
+  // underlying implementation for `call` can change
   self.call = function(method, arg, fn) {
 
-    var ret = test_data[method](arg, localStorage.sessionId),
+    var ret = test_data[method](arg, storage.sessionId),
         promise = new Promise(fn);
 
     // debug message
@@ -22,8 +24,8 @@ function Backend(conf) {
     }
 
     // session management
-    if (ret.sessionId) localStorage.sessionId = ret.sessionId;
-    else if (method == 'logout') localStorage.removeItem("sessionId");
+    if (ret.sessionId) storage.sessionId = ret.sessionId;
+    else if (method == 'logout') storage.removeItem("sessionId");
 
 
     // fake delay for the call

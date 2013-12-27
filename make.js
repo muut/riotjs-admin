@@ -5,17 +5,21 @@
 require('shelljs/make');
 
 var gaze = require('gaze'),
-    stylus = require('stylus');
+    stylus = require('stylus'),
+    header = ";(function(top) {",
+    footer = '})(typeof top == "object" ? window : exports);';
 
 
 // Make a single file out of everything
 function concat() {
 
+  mkdir("-p", "dist");
+
   // riot.js
   var js = cat("bower_components/riotjs/riot.js")
 
   // api
-  js += ";(function(is_node) {" + cat("src/api/*.js") + '})(typeof exports == "object")'
+  js += header + cat("src/api/*.js") + footer;
 
   // ui
   js+= cat(["src/ext/*.js", "src/ui/*.js"])
@@ -24,6 +28,21 @@ function concat() {
   js.to("dist/admin.js")
 
 }
+
+target.test = function() {
+
+  mkdir("-p", "dist");
+
+  // generate API files
+  (header + cat("src/api/*.js") + footer).to("dist/api.js");
+
+  // run tests
+  require("./test/index.js");
+}
+
+
+// return target.test();
+
 
 // Compile stylus file
 function styl(source, target) {
@@ -55,4 +74,5 @@ target.watch = function() {
   })
 
 }
+
 

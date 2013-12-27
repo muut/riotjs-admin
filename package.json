@@ -15,6 +15,7 @@
   ],
   "devDependencies": {
     "stylus": "latest",
+    "underscore": "latest",
     "shelljs": "0.2.x",
     "gaze": "0.4.x"
   }
