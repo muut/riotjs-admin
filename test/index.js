@@ -2,8 +2,8 @@
 // jQuery object with Riot functions
 global.$ = require("../bower_components/riotjs/riot.js");
 
-// jQuery utility functions from uderscore
-var _ = require("underscore");
+// $ utility functions used by API (from uderscore)
+var _ = require("lodash");
 
 _.each(['map', 'isFunction', 'extend'], function(name) {
   $[name] = _[name];
