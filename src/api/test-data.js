@@ -122,7 +122,7 @@ var test_data = {
         name: "Joe Rebellous",
         username: "riot"
       },
-      sessionId: 'riot-test-id',
+      sessionId: sessionId,
       view: test_data.load(page)
     };
 

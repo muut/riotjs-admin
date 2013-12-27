@@ -1,16 +1,6 @@
 
-// BDD style testing
-require("../bower_components/riotjs/bdd.js");
-
-// jQuery object with Riot functions
-global.$ = require("../bower_components/riotjs/riot.js");
-
-// $ utility functions used by API (from lodash)
-var _ = require("lodash");
-
-_.each(['map', 'isFunction', 'extend'], function(name) {
-  $[name] = _[name];
-});
+// required stuff for tests
+require("./test.js")
 
 // the admin interface
 var admin = require("../dist/api.js").admin;
@@ -20,9 +10,16 @@ admin(function(app) {
 
   it("Should have proper initial values", function() {
     assert.equal(app.page, "stats");
+    assert.equal(app.user.username, "riot");
   });
+
+  it("Should have an initial view", function() {
+    app.one("load", function(view) {
+      assert.equal(view.type, "stats");
+    })
+  })
 
 });
 
 // initialize
-admin({ page: "stats", debug: true, cache: false })
+admin({ page: "stats", debug: false, cache: false, sessionId: 'abc' })
