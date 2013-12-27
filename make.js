@@ -40,9 +40,11 @@ target.test = function() {
   require("./test/index.js");
 }
 
+target.lint = function() {
+  exec("jshint src");
+}
 
 // return target.test();
-
 
 // Compile stylus file
 function styl(source, target) {

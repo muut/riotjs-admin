@@ -2,7 +2,7 @@
 // Handle (animated) view switching, aka. routing
 admin(function(app) {
 
-  var klass = "is-active"
+  var klass = "is-active";
 
   // 1. select elements from the page to call $.route(path)
   $("navi a").click(function() {

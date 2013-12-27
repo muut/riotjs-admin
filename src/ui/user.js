@@ -19,7 +19,7 @@ admin(function(app) {
 
     $("button", root).click(function() {
       $(this).text("User is banned!");
-    })
+    });
 
   });
 

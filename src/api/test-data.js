@@ -1,4 +1,6 @@
 
+/*jshint multistr:true */
+
 // Test data ("fixtures")
 
 var customers = $.map([
@@ -37,7 +39,7 @@ function customer(id) {
   return $.extend(customers[id - 1], {
     img: 'img/tipiirai.jpg',
     email: 'demo@company.it',
-    joined: +new Date - 100000,
+    joined: (+new Date() - 100000),
 
     desc: 'Elit hoodie pickled, literally church-key whatever High Life skateboard \
       tofu actually reprehenderit. Id slow-carb asymmetrical accusamus \
@@ -72,7 +74,7 @@ function user(id) {
   return $.extend(users[id - 1], {
     username: 'dominique2',
     email: 'demo.user@riotjs.com',
-    joined: +new Date - 100000,
+    joined: (+new Date() - 100000),
 
     desc: 'Elit hoodie pickled, literally church-key whatever High Life skateboard \
       tofu actually reprehenderit. Id slow-carb asymmetrical accusamus \
@@ -107,7 +109,7 @@ var test_data = {
             page == "customers" ? customers :
             page == "customer" ? customer(els[1]) :
             page == "user" ? user(els[1]) : []
-    }
+    };
 
   },
 
@@ -122,7 +124,7 @@ var test_data = {
       },
       sessionId: 'riot-test-id',
       view: test_data.load(page)
-    }
+    };
 
   },
 
@@ -131,11 +133,11 @@ var test_data = {
   },
 
   login: function(params) {
-    return test_data.init(params.page, params.username == 'riot')
+    return test_data.init(params.page, params.username == 'riot');
   },
 
   logout: function() {
     return true;
   }
 
-}
+};

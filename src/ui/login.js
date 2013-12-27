@@ -23,7 +23,7 @@ admin(function(app) {
     }).done(function() {
       el.removeClass("is-loading");
 
-    })
+    });
 
   });
 
@@ -39,7 +39,7 @@ admin(function(app) {
   });
 
   function toggle(is_logged) {
-    app.root.toggleClass("is-logged", is_logged).toggleClass("is-not-logged", !is_logged)
+    app.root.toggleClass("is-logged", is_logged).toggleClass("is-not-logged", !is_logged);
   }
 
   user.on("login logout", function(type) {

@@ -15,7 +15,7 @@ function Admin(conf) {
     self.one("load", fn);
 
     backend.call("load", page, function(view) {
-      self.trigger("load", view)
+      self.trigger("load", view);
     });
 
   };
@@ -33,7 +33,7 @@ function Admin(conf) {
     self.trigger("ready");
 
   }).done(function(data) {
-    self.trigger("load", data.view)
+    self.trigger("load", data.view);
 
   }).fail(function() {
 

@@ -16,7 +16,9 @@
   "devDependencies": {
     "stylus": "latest",
     "lodash": "latest",
+    "jshint": "latest",
     "shelljs": "0.2.x",
     "gaze": "0.4.x"
   }
+
 }

@@ -19,7 +19,7 @@ function Backend(conf) {
 
     // configurable caching for the "load" method
     if (conf.cache && method == 'load') {
-      if (cache[arg]) return promise.done(cache[arg])
+      if (cache[arg]) return promise.done(cache[arg]);
       cache[arg] = ret;
     }
 
@@ -35,13 +35,13 @@ function Backend(conf) {
       promise.always(ret);
       promise[ret === false ? 'fail' : 'done'](ret);
 
-    }, 400)
+    }, 400);
 
     // given callback
     promise.done(fn);
 
     return promise;
 
-  }
+  };
 
 }
