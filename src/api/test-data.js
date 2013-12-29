@@ -37,17 +37,21 @@ var customers = $.map([
 
 function customer(id) {
   return $.extend(customers[id - 1], {
-    img: 'img/tipiirai.jpg',
-    email: 'demo@company.it',
+
+    img: 'img/company.png',
     joined: (+new Date() - 100000),
+    email: 'demo@company.it',
 
     desc: 'Elit hoodie pickled, literally church-key whatever High Life skateboard \
       tofu actually reprehenderit. Id slow-carb asymmetrical accusamus \
       Portland, flannel tempor proident odio esse quis.',
 
-    invoices: [
+    invoices: $.map([200, 350, 150, 600], function(total, i) {
+      return { id: i + 1, total: total, time: (+new Date() - 1234567890 * i) }
+    }),
 
-    ]
+    users: users
+
   });
 
 }

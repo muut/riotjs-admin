@@ -25,7 +25,8 @@
 
   <template id="user-tmpl">
     <img src="{img}">
-    <div>
+
+    <div class="details">
       <h1>{name}</h1>
       <p class="meta">
         @{username} <span>&bull;</span>
@@ -39,17 +40,38 @@
     </div>
   </template>
 
+  <template id="user-link-tmpl">
+    <a href="#/user/{id}" title="{title}"><img src="{img}"></a>
+  </template>
+
+  <template id="invoice-tmpl">
+    <li>{time} <strong>${total}</strong></li>
+  </template>
+
   <template id="customer-tmpl">
     <img src="{img}">
-    <div>
+
+    <div class="details">
       <h1>{name}</h1>
+
       <p class="meta">
         {email} <span>&bull;</span>
         {joined}
       </p>
 
       <p class="desc">{desc}</p>
+
     </div>
+
+    <div id="user-list">
+      <h3>Users</h3>
+    </div>
+
+    <div id="invoice-list">
+      <h3>Invoices</h3>
+      <ul></ul>
+    </div>
+
   </template>
 
   <body id="app">

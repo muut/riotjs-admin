@@ -133,17 +133,7 @@ navi
   &.is-loading
     opacity .5
 
-// view visibility
-#stats-page
-  h3
-    font-weight normal
-    font-size 100%
-    margin 0 0 -1.1em 3em
 
-  canvas
-    width 800px
-    height 200px
-    margin-bottom 25px
 
 main
   position relative
@@ -210,18 +200,29 @@ main
     display block
     border-radius 4px
 
+#stats-page
+  h3
+    font-weight normal
+    font-size 100%
+    margin 0 0 -1.1em 3em
 
-#user-page
+  canvas
+    width 800px
+    height 200px
+    margin-bottom 25px
+
+#user-page, #customer-page
   margin-top u2
 
   img
     margin-right u2
     border-radius 4px
 
-  div
+  .details
     display inline-block
     max-width 530px
     vertical-align top
+    padding-top uh
 
   h1
     font-weight normal
@@ -240,6 +241,30 @@ main
     font-size 120%
     line-height 1.2
     margin-bottom u2
+
+#customer-page
+  img
+    max-width 180px
+
+#user-list
+  margin-bottom u2
+
+  img
+    max-width 60px
+    margin 0 u uh 0
+
+#invoice-list
+  max-width 200px
+
+  ul
+    list-style-type none
+    padding 0
+
+  li
+    padding uh 0
+
+  strong
+    float right
 
 // search
 #search

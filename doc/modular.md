@@ -154,7 +154,7 @@ Riot takes a strong position on not recommending logic inside the templates. The
 
 1. HTML is not inherently meant to describe logic
 
-1. Template loops are unnecessary on realtime applications where the iteratable lists change over time
+1. Template loops are unnecessary on realtime applications where the iteratable lists change over time. This must be the hardest challenge for the current template languages.
 
 1. Logic inside HTML is hard or impossible to test
 
