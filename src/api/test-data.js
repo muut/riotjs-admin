@@ -47,7 +47,7 @@ function customer(id) {
       Portland, flannel tempor proident odio esse quis.',
 
     invoices: $.map([200, 350, 150, 600], function(total, i) {
-      return { id: i + 1, total: total, time: (+new Date() - 1234567890 * i) }
+      return { id: i + 1, total: total, time: (+new Date() - 1234567890 * i) };
     }),
 
     users: users

@@ -7,4 +7,4 @@ var util = {
     return d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate();
   }
 
-}
+};
