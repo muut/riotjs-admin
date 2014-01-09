@@ -13,6 +13,8 @@ header a{font-size:80%;margin-left:1em;color:#eee;-webkit-transition:color .1s;-
 header a.is-loading{color:#555}
 header a.is-active{color:#999;text-decoration:none;cursor:default}
 navi{margin-left:2em;display:inline-block;width:58%}
+footer{background-color:rgba(49,63,76,0.8);width:100%;position:absolute;bottom:0;font-size:80%;color:#999;padding:.6em 0;letter-spacing:5px;text-align:center;display:none;}
+footer a{color:#ddd;letter-spacing:0}
 #login{padding:2em;background-color:rgba(0,0,0,0.5);color:#eee;margin:15% auto;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;display:none;-webkit-transition:opacity .3s;-moz-transition:opacity .3s;transition:opacity .3s;}
 #login label{display:block;margin-bottom:1.2em;font-weight:100;color:#ccc;text-align:left}
 #login button{width:60%;font-size:110%;padding:.6em 0}
@@ -25,6 +27,7 @@ main{position:relative}
 .page.is-active{opacity:1;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);z-index:1}
 .is-not-logged{background:#556370 url("../img/wallpaper.jpg") 0 0 no-repeat;text-align:center;-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;}
 .is-not-logged #login{display:inline-block}
+.is-not-logged footer{display:block}
 .is-logged{background-image:none;}
 .is-logged header,.is-logged .page{display:block}
 .is-logged #login{display:none}
