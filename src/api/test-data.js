@@ -127,7 +127,7 @@ var test_data = {
         username: "riot"
       },
       sessionId: sessionId,
-      view: test_data.load(page)
+      view: test_data.load(page || 'stats')
     };
 
   },

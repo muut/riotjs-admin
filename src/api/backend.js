@@ -27,7 +27,6 @@ function Backend(conf) {
     if (ret.sessionId) storage.sessionId = ret.sessionId;
     else if (method == 'logout') storage.removeItem("sessionId");
 
-
     // fake delay for the call
     setTimeout(function() {
       if (debug) console.info("<-", ret);
