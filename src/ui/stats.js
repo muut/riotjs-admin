@@ -1,5 +1,5 @@
 
-// Draw stats
+// Presenter for stats (the line graphs, see ext/graph.js)
 admin(function(app) {
 
   var canvas = $("canvas", app.root),

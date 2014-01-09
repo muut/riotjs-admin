@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style/style.css">
   </head>
 
+  <!-- template for single statistical bar -->
   <template id="bars-tmpl">
     <a href="#/customer/{id}">
       <em>{name}</em>
@@ -17,12 +18,14 @@
     </a>
   </template>
 
+  <!-- search result entry -->
   <template id="result-tmpl">
     <a href="#/user/{id}">
       <img src="{img}"> <span>{name}</span>
     </a>
   </template>
 
+  <!-- user page template -->
   <template id="user-tmpl">
     <img src="{img}">
 
@@ -40,14 +43,17 @@
     </div>
   </template>
 
+  <!-- link to individual user -->
   <template id="user-link-tmpl">
     <a href="#/user/{id}" title="{title}"><img src="{img}"></a>
   </template>
 
+  <!-- invoice entry -->
   <template id="invoice-tmpl">
     <li>{time} <strong>${total}</strong></li>
   </template>
 
+  <!-- customer page -->
   <template id="customer-tmpl">
     <img src="{img}">
 
@@ -74,6 +80,7 @@
 
   </template>
 
+  <!-- application root -->
   <body id="app">
 
     <header>
@@ -134,12 +141,14 @@
 
     </main>
 
+    <!-- footer links, only shown on login screen -->
     <footer>
       <a href="https://github.com/moot/riotjs-admin">View source</a> &bull;
       <a href="https://moot.it/riotjs/">Riot.js website</a> &bull;
       <a href="https://github.com/moot/riotjs">Riot.js @ Github</a>
     </footer>
 
+    <!-- scripts -->
     <script src="bower_components/jquery/jquery.min.js"></script>
     <script src="dist/admin.js"></script>
 

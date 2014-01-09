@@ -20,6 +20,7 @@ function Admin(conf) {
 
   };
 
+  // ... other API methods goes here
 
   // same as load("search")
   self.search = function(query, fn) {
@@ -46,6 +47,7 @@ function Admin(conf) {
 
   });
 
+  // on each "page" load
   self.on("load", function(view) {
     self.trigger("load:" + view.type, view.data, view.path);
     self.page = view.type;

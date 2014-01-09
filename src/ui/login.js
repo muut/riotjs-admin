@@ -1,10 +1,10 @@
 
-// login and logout
+// Login and logout features
 
 admin(function(app) {
 
   var user = app.user,
-      loading = "is-loading";
+    loading = "is-loading";
 
   // login
   $("#login").submit(function(e) {

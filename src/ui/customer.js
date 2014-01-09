@@ -1,11 +1,11 @@
 
-// Single user
+// Presenter for single user
 admin(function(app) {
 
   var root = $("#customer-page"),
-      tmpl = $("#customer-tmpl").html(),
-      user_tmpl = $("#user-link-tmpl").html(),
-      invoice_tmpl = $("#invoice-tmpl").html();
+    tmpl = $("#customer-tmpl").html(),
+    user_tmpl = $("#user-link-tmpl").html(),
+    invoice_tmpl = $("#invoice-tmpl").html();
 
   app.on("load:customer", function(data) {
 

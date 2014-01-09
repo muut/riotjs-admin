@@ -1,5 +1,5 @@
 
-// The ability to split the application into loosely-coupled modules
+// The ability to split your single-page application (SPA) into loosely-coupled modules
 
 var instance;
 

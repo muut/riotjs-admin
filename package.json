@@ -1,24 +1,24 @@
 {
   "name": "riot-admin",
-  "description": "Riot.js based administration panel",
+  "description": "Administration panel – A Riot.js demo (The 1kb MVP library)",
   "version": "1.0.0",
-  "homepage": "https://moot.it/riotjs",
+  "homepage": "https://moot.it/riotjs/demo",
   "repository": {
     "type": "git",
-    "url": "https://github.com/moot/riotjs.git"
+    "url": "https://github.com/moot/riotjs-admin.git"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "http://moot.it/riotjs/license"
+      "url": "http://opensource.org/licenses/mit-license.php"
     }
   ],
   "devDependencies": {
     "stylus": "latest",
     "lodash": "latest",
     "jshint": "latest",
-    "shelljs": "0.2.x",
-    "gaze": "0.4.x"
+    "shelljs": "latest",
+    "gaze": "latest"
   }
 
 }

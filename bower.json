@@ -1,16 +1,11 @@
 {
   "name": "riotjs-admin",
   "version": "0.0.1",
-  "homepage": "https://moot.it/riotjs/",
-  "authors": [
-    "Tero Piirainen",
-    "Marcelo Eden",
-    "Moot Inc.",
-    "Other contributors"
-  ],
-  "description": "A demo administration panel made with the Riot.js MVP library",
-  "main": "riot.js",
-  "keywords": [ "MVP", "MVC", "framework", "library"],
+  "homepage": "https://moot.it/riotjs/demo/",
+  "authors": [ "Tero Piirainen"],
+  "description": "Administration panel – A Riot.js demo (The 1kb MVP library)",
+  "main": "index.html",
+  "keywords": [ "administration", "panel", "MVP", "control panel"],
   "license": "MIT",
   "ignore": [
     "**/.*",

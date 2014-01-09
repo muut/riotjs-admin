@@ -1,4 +1,5 @@
 
+// List of utility functions for the UI
 var util = {
 
   // date formatting goes to presenter layer, not inside model

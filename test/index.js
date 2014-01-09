@@ -1,11 +1,16 @@
 
+/*
+  Shows you how to test your API (model) on the server.
+  This makes a seamless integration to the development workflow.
+*/
+
 // required stuff for tests
 require("./test.js")
 
 // the admin interface
 var admin = require("../dist/api.js").admin;
 
-// run tests
+// run the tests
 admin(function(app) {
 
   it("Should have proper initial values", function() {

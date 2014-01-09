@@ -1,5 +1,8 @@
 
-// Handle (animated) view switching, aka. routing
+/*
+  Handle view switching, aka. "routing"
+  The transition effect is done with CSS
+*/
 admin(function(app) {
 
   var klass = "is-active";

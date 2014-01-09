@@ -1,7 +1,7 @@
 
 /*jshint multistr:true */
 
-// Test data ("fixtures")
+// Fake server responses (aka. "fixtures"),
 
 var customers = $.map([
   'Acme, inc.',

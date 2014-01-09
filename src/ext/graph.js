@@ -1,5 +1,5 @@
 
-// A minimalistic line graph tool, not tested
+// A minimalistic line graph tool (use with extreme care, not tested)
 $.fn.graph2 = function(data, color) {
 
   var graph = this,

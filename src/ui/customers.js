@@ -1,5 +1,5 @@
 
-// List of customers
+// Presenter for customer list
 admin(function(app) {
 
   var root = $("#bars", app.root),
