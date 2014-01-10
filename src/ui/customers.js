@@ -20,8 +20,6 @@ admin(function(app) {
 
       entry.width = Math.round(entry.val / max * 100);
 
-      console.info(tmpl)
-
       root.append($.render(tmpl, entry));
 
     });
