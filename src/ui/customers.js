@@ -14,9 +14,13 @@ admin(function(app) {
 
     // add new ones
     $.each(view, function(i, entry) {
+
+      // first one is the largest
       if (!i) max = entry.val;
 
       entry.width = Math.round(entry.val / max * 100);
+
+      console.info(tmpl)
 
       root.append($.render(tmpl, entry));
 
