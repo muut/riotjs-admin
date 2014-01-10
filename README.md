@@ -30,3 +30,17 @@ This is a demo single-page demo application made with Riot.js. It's a generic sk
 - realtime channel
 - tests for both UI and API layer
 - documented API, including events
+
+
+## Installation
+
+Hit following commands to run the administration panel on the console
+
+``` sh
+bower install
+npm install
+./make.js watch
+open index.html
+```
+
+You should be able to modify JS and Stylus files and the concatenation and pre-compilation is automatically taken care of. Check make.js for more other targets than `watch`.
