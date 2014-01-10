@@ -1,5 +1,7 @@
 
-### Riot.js demo
+![](https://moot.it/riotjs/demo/img/riotjslogo@2x.png)
+
+## Riot.js demo application
 
 This is a demo single-page demo application made with Riot.js. It's a generic skeleton for an administration panel that shows the core concepts of modular client side development.
 
@@ -44,3 +46,10 @@ open index.html
 ```
 
 You should be able to modify JS and Stylus files and the concatenation and pre-compilation is automatically taken care of. Check make.js for more other targets than `watch`.
+
+
+[Live version](https://moot.it/riotjs/demo/) &bull;
+[Riot website](https://moot.it/riotjs/) &bull;
+[Building modular applications with Riot.js](https://moot.it/riotjs/docs/) &bull;
+[Original Riot blog post](https://moot.it/blog/technology/riotjs-the-1kb-mvp-framework.html)
+
