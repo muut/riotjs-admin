@@ -1,0 +1,82 @@
+
+/* Initial login screen */
+
+#logo
+  background-image url("../img/riotjslogo.png")
+  width 220px
+  height 83px
+  position absolute
+  top u2
+  left u2
+  display none
+
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)
+    background-image url("../img/riotjslogo@2x.png")
+    -webkit-background-size 100%
+
+
+#login
+  padding 2em
+  background-color rgba(#0, .5)
+  color #e
+  margin 25% auto
+  border-radius 4px
+  display none
+  transition opacity .3s
+
+  label
+    display block
+    margin-bottom u2
+    font-weight 100
+    color #c
+    text-align left
+
+  button
+    width 60%
+    font-size 110%
+    padding u 0
+
+  input
+    width 100%
+    border none
+    background-color rgba(#f, .5)
+    box-shadow 0 0 5px #4 inset
+
+    &:focus
+      background-color #f
+
+  h3
+    font-family "avenir next", "helvetica neue"
+    font-weight 100
+    font-size 250%
+    margin-bottom u
+
+  &.is-loading
+    opacity .5
+
+  @media (max-width: 600px)
+    margin-top 140px
+
+.is-not-logged
+  background #556370 url(../img/wallpaper.jpg) 0 0 no-repeat
+  text-align center
+  background-size cover
+
+  #login
+    display inline-block
+
+  #logo, footer
+    display block
+
+  @media (max-width: 1150px)
+    background-size 150% 1600px
+
+
+.is-logged
+  background-image none
+
+  header, .page
+    display block
+
+  #login
+    display none

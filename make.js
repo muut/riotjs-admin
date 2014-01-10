@@ -71,8 +71,8 @@ target.concat = concat;
 // generate application
 target.gen = function() {
   concat();
-  styl("style/style.styl", "dist/style.css");
-  cp("bower_components/jquery/jquery.min.js", "dist");
+  styl("style/index.styl", "dist/style.css");
+  cp("-f", "bower_components/jquery/jquery.min.js", "dist");
 };
 
 // watch for changes: ./make.js watch
@@ -88,7 +88,7 @@ target.watch = function() {
   // styles
   gaze("style/*.styl", function() {
     this.on('changed', function(e, file) {
-      styl("style/style.styl", "dist/style.css");
+      styl("style/index.styl", "dist/style.css");
     });
   });
 
