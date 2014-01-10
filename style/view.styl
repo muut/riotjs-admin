@@ -1,6 +1,8 @@
 
-/* Various views */
-
+/*
+  All the different views of this application.
+  Might make sense to separate into individual files when things start growing.
+*/
 
 // CSS based fading for view switch
 main
@@ -16,6 +18,7 @@ main
   display none
   width 100%
   z-index -1
+  padding 15px
 
   &.is-active
     opacity 1
@@ -27,6 +30,7 @@ main
   a
     display block
     padding uh
+    text-decoration none
 
     > *
       display inline-block
@@ -59,7 +63,6 @@ main
     margin 0 0 -1.1em 3em
 
   canvas
-    width 800px
     height 200px
     margin-bottom 25px
 

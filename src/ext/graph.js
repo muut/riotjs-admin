@@ -2,7 +2,7 @@
 // A minimalistic line graph tool (use with extreme care, not tested)
 $.fn.graph2 = function(data, color) {
 
-  var graph = this,
+  var graph = this.attr("width", this.parent().width() - 10),
       padd = 35,
       c = graph[0].getContext("2d"),
       max = Math.max.apply(0, data),
