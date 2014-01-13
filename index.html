@@ -3,7 +3,6 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" id="viewport" content="width=device-width">
     <title>Admin Demo | Riot.js – The 1kb MVP library</title>
     <link rel="stylesheet" href="dist/style.css">
@@ -80,92 +79,94 @@
       <a href="https://github.com/moot/riotjs">Riot.js @ Github</a>
     </footer>
 
+    <!-- templates -->
+
+    <!-- single statistical bar -->
+    <script type="text/tmpl" id="bars-tmpl">
+      <a href="#/customer/{id}">
+        <em>{name}</em>
+        <span>
+          <strong style="width: {width}%"></strong>
+        </span>
+      </a>
+    </script>
+
+    <!-- search result entry -->
+    <script type="text/tmpl" id="result-tmpl">
+      <a href="#/user/{id}">
+        <img src="{img}"> <span>{name}</span>
+      </a>
+    </script>
+
+    <!-- user page template -->
+    <script type="text/tmpl" id="user-tmpl">
+      <img src="{img}">
+
+      <div class="details">
+        <h1>{name}</h1>
+        <p class="meta">
+          @{username} <span>&bull;</span>
+          {email} <span>&bull;</span>
+          {joined}
+        </p>
+
+        <p class="desc">{desc}</p>
+
+        <button>Ban user</button>
+      </div>
+    </script>
+
+    <!-- link to individual user -->
+    <script type="text/tmpl" id="user-link-tmpl">
+      <a href="#/user/{id}" title="{title}"><img src="{img}"></a>
+    </script>
+
+    <!-- invoice entry -->
+    <script type="text/tmpl" id="invoice-tmpl">
+      <li>{time} <strong>${total}</strong></li>
+    </script>
+
+    <!-- customer page -->
+    <script type="text/tmpl" id="customer-tmpl">
+      <img src="{img}">
+
+      <div class="details">
+        <h1>{name}</h1>
+
+        <p class="meta">
+          {email} <span>&bull;</span>
+          {joined}
+        </p>
+
+        <p class="desc">{desc}</p>
+
+      </div>
+
+      <div id="user-list">
+        <h3>Users</h3>
+      </div>
+
+      <div id="invoice-list">
+        <h3>Invoices</h3>
+        <ul></ul>
+      </div>
+
+    </script>
+
     <!-- scripts -->
     <script src="dist/jquery.min.js"></script>
     <script src="dist/admin.js"></script>
 
-    <!-- initialize application -->
+    <!-- start the application -->
     <script>
       admin({
         page: location.hash.slice(2),
         root: $("body"),
         debug: true,
         cache: false
-      })
+      });
     </script>
 
   </body>
-
-  <!-- template for single statistical bar -->
-  <script type="text/tmpl" id="bars-tmpl">
-    <a href="#/customer/{id}">
-      <em>{name}</em>
-      <span>
-        <strong style="width: {width}%"></strong>
-      </span>
-    </a>
-  </script>
-
-  <!-- search result entry -->
-  <script type="text/tmpl" id="result-tmpl">
-    <a href="#/user/{id}">
-      <img src="{img}"> <span>{name}</span>
-    </a>
-  </script>
-
-  <!-- user page template -->
-  <script type="text/tmpl" id="user-tmpl">
-    <img src="{img}">
-
-    <div class="details">
-      <h1>{name}</h1>
-      <p class="meta">
-        @{username} <span>&bull;</span>
-        {email} <span>&bull;</span>
-        {joined}
-      </p>
-
-      <p class="desc">{desc}</p>
-
-      <button>Ban user</button>
-    </div>
-  </script>
-
-  <!-- link to individual user -->
-  <script type="text/tmpl" id="user-link-tmpl">
-    <a href="#/user/{id}" title="{title}"><img src="{img}"></a>
-  </script>
-
-  <!-- invoice entry -->
-  <script type="text/tmpl" id="invoice-tmpl">
-    <li>{time} <strong>${total}</strong></li>
-  </script>
-
-  <!-- customer page -->
-  <script type="text/tmpl" id="customer-tmpl">
-    <img src="{img}">
-
-    <div class="details">
-      <h1>{name}</h1>
-
-      <p class="meta">
-        {email} <span>&bull;</span>
-        {joined}
-      </p>
-
-      <p class="desc">{desc}</p>
-
-    </div>
-
-    <div id="user-list">
-      <h3>Users</h3>
-    </div>
-
-    <div id="invoice-list">
-      <h3>Invoices</h3>
-      <ul></ul>
-    </div>
-
-  </script>
 
 </html>

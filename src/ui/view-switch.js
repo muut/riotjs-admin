@@ -35,7 +35,7 @@ admin(function(app) {
   });
 
   // 3. Set "is-active" class name for the active page
-  app.on("before:load", function(type) {
+  app.on("before:load", function() {
 
     // remove existing class
     $("." + klass).removeClass(klass);
@@ -46,7 +46,7 @@ admin(function(app) {
     $("#" + view.type + "-page").add("#" + view.type + "-nav").addClass(klass);
 
     // remove loading indicator
-    $("navi .is-loading").removeClass("is-loading");
+    $("nav .is-loading").removeClass("is-loading");
 
   });
 

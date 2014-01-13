@@ -10,7 +10,7 @@ function Admin(conf) {
   // load a given page from the server
   self.load = function(page, fn) {
 
-    self.trigger("before:load");
+    self.trigger("before:load", page);
 
     self.one("load", fn);
 

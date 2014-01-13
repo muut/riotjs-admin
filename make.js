@@ -21,7 +21,8 @@ function concat() {
   init();
 
   // riot.js
-  var js = cat("bower_components/riotjs/riot.js");
+  // var js = cat("bower_components/riotjs/riot.js");
+  var js = cat("../riotjs/riot.js");
 
   // api
   js += header + cat("src/api/*.js") + footer;
