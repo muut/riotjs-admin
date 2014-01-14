@@ -1,5 +1,5 @@
 
-// A generic promiese interface by using $.observable
+// A generic promise interface by using $.observable
 
 function Promise(fn) {
   var self = $.observable(this);
