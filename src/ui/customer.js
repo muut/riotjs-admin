@@ -10,13 +10,13 @@ admin(function(app) {
   app.on("load:customer", function(data) {
 
     data.joined = util.timeformat(data.joined);
-    root.html($.render(tmpl, data));
+    root.html(riot.render(tmpl, data));
 
     // users
     var list = $("#user-list", root);
 
     $.each(data.users, function(i, el) {
-      list.append($.render(user_tmpl, el));
+      list.append(riot.render(user_tmpl, el));
     });
 
     // invoices
@@ -24,7 +24,7 @@ admin(function(app) {
 
     $.each(data.invoices, function(i, el) {
       el.time = util.timeformat(el.time);
-      list.append($.render(invoice_tmpl, el));
+      list.append(riot.render(invoice_tmpl, el));
     });
 
   });

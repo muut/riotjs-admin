@@ -2,7 +2,7 @@
 // Current user (logged in or anonymous)
 function User(app, data, backend) {
 
-  var self = $.observable(this);
+  var self = riot.observable(this);
 
   $.extend(self, data);
 

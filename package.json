@@ -2,7 +2,7 @@
   "name": "riot-admin",
   "description": "Administration panel – A Riot.js demo (The 1kb MVP library)",
   "version": "1.0.0",
-  "homepage": "https://moot.it/riotjs/demo",
+  "homepage": "https://muut.com/riotjs/demo",
   "repository": {
     "type": "git",
     "url": "https://github.com/moot/riotjs-admin.git"

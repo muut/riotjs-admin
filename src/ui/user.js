@@ -7,7 +7,7 @@ admin(function(app) {
 
   app.on("load:user", function(data) {
     data.joined = util.timeformat(data.joined);
-    root.html($.render(tmpl, data));
+    root.html(riot.render(tmpl, data));
 
     // not real banning feature on this demo
     $("button", root).click(function() {

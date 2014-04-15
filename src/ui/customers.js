@@ -20,7 +20,7 @@ admin(function(app) {
 
       entry.width = Math.round(entry.val / max * 100);
 
-      root.append($.render(tmpl, entry));
+      root.append(riot.render(tmpl, entry));
 
     });
 

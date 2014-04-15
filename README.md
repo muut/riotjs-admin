@@ -1,5 +1,5 @@
 
-![](https://moot.it/riotjs/demo/img/riotjslogo@2x.png)
+![](https://muut.com/riotjs/demo/img/riotjslogo@2x.png)
 
 ## Riot.js demo application
 
@@ -49,8 +49,8 @@ open index.html
 You should be able to modify JS and Stylus files and the concatenation and pre-compilation is automatically taken care of. Check make.js for more other targets than `watch`.
 
 
-[Live version](https://moot.it/riotjs/demo/) &bull;
-[Riot website](https://moot.it/riotjs/) &bull;
-[Building modular applications with Riot.js](https://moot.it/riotjs/docs/) &bull;
-[Original Riot blog post](https://moot.it/blog/technology/riotjs-the-1kb-mvp-framework.html)
+[Live version](https://muut.com/riotjs/demo/) &bull;
+[Riot website](https://muut.com/riotjs/) &bull;
+[Building modular applications with Riot.js](https://muut.com/riotjs/docs/) &bull;
+[Original Riot blog post](https://muut.com/blog/technology/riotjs-the-1kb-mvp-framework.html)
 

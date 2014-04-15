@@ -22,7 +22,7 @@ admin(function(app) {
       results.empty().show();
 
       $.each(arr, function(i, res) {
-        results.append($.render(tmpl, res));
+        results.append(riot.render(tmpl, res));
       });
 
     });

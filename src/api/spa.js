@@ -3,7 +3,7 @@
 
 var instance;
 
-top.admin = $.observable(function(arg) {
+top.admin = riot.observable(function(arg) {
 
   // admin() --> return instance
   if (!arg) return instance;

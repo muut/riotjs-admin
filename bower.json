@@ -1,11 +1,11 @@
 {
   "name": "riotjs-admin",
-  "version": "0.0.1",
-  "homepage": "https://moot.it/riotjs/demo/",
-  "authors": [ "Tero Piirainen"],
+  "version": "0.0.2",
+  "homepage": "https://muut.com/riotjs/demo/",
+  "authors": [ "Tero Piirainen" ],
   "description": "Administration panel – A Riot.js demo (The 1kb MVP library)",
   "main": "index.html",
-  "keywords": [ "administration", "panel", "MVP", "control panel"],
+  "keywords": [ "administration", "panel", "MVP", "MVC", "control panel"],
   "license": "MIT",
   "ignore": [
     "**/.*",
@@ -13,8 +13,7 @@
     "bower_components"
   ],
   "dependencies": {
-    "jquery": "~1.10.2",
+    "jquery": "~1.11.0",
     "riotjs": "latest"
   }
-
 }
