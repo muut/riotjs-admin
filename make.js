@@ -73,7 +73,7 @@ target.concat = concat;
 target.gen = function() {
   concat();
   styl("style/index.styl", "dist/style.css");
-  cp("-f", "bower_components/jquery/jquery.min.js", "dist");
+  cp("-f", "bower_components/jquery/dist/jquery.min.js", "dist");
 };
 
 // watch for changes: ./make.js watch
