@@ -133,7 +133,9 @@ var test_data = {
   },
 
   search: function(query) {
-    return users;
+    return users.filter( function(user){
+      return user.name.toLowerCase().match(query.toLowerCase());
+    });
   },
 
   login: function(params) {
