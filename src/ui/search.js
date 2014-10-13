@@ -6,7 +6,7 @@ admin(function(app) {
       tmpl = $("#result-tmpl").html(),
       results = $("#results");
 
-  form.submit(function(e) {
+  form.on('keyup', function(e) {
 
     e.preventDefault();
 
